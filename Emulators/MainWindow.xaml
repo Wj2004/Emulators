@@ -1,0 +1,12 @@
+﻿<Control:CustomWindow
+		x:Name="ChooseWindow" x:Class="Emulators.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:Control="clr-namespace:MyCustomControls;assembly=MyCustomControls"
+		Icon="Pics/Logo4.ico"
+        Title="Emulators" Height="350" Width="850" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#2D2D30" WindowStartupLocation="CenterScreen" MinHeight="500" MinWidth="850">
+	<DockPanel>
+		<Frame x:Name="pageView" NavigationUIVisibility="Hidden"/>
+	</DockPanel>
+</Control:CustomWindow>
+

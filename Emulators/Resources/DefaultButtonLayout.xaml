@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Emulators.Resources">
+
+	<Style TargetType="{x:Type Button}" x:Key="ButtonLayout">
+		<Setter Property="OverridesDefaultStyle" Value="True"/>
+		<Setter Property="Margin" Value="2"/>
+		<Setter Property="FocusVisualStyle" Value="{StaticResource MyFocusVisual}" />
+		<Setter Property="Background" Value="#FF4F4F4F"/>
+		<Setter Property="Foreground" Value="#FFE8E8E8"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Button">
+					<Border Name="border" 
+        				BorderThickness="0"
+          				Background="{TemplateBinding Background}">
+						<Grid >
+							<ContentPresenter HorizontalAlignment="Center" 
+                                    VerticalAlignment="Center" Name="content"/>
+						</Grid>
+					</Border>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter Property="Foreground" Value="#FF4788c8" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Background" TargetName="border" Value="#3F4F4F4F"/>
+							<Setter Property="TextElement.Foreground" Value="#3FE8E8E8"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+</ResourceDictionary>
