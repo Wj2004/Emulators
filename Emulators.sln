@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emulators", "Emulators\Emulators.csproj", "{BBB46C21-E4ED-4A2B-8DA1-7CF7D4AE09CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCustomControls", "..\CustomWindow\MyCustomControls\MyCustomControls.csproj", "{9A86C1D1-A3E2-40D8-8F4C-39C1E191B571}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{BBB46C21-E4ED-4A2B-8DA1-7CF7D4AE09CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBB46C21-E4ED-4A2B-8DA1-7CF7D4AE09CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBB46C21-E4ED-4A2B-8DA1-7CF7D4AE09CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A86C1D1-A3E2-40D8-8F4C-39C1E191B571}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A86C1D1-A3E2-40D8-8F4C-39C1E191B571}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A86C1D1-A3E2-40D8-8F4C-39C1E191B571}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A86C1D1-A3E2-40D8-8F4C-39C1E191B571}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

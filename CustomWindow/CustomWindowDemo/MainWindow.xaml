@@ -1,0 +1,9 @@
+﻿<control:CustomWindow x:Class="CustomWindowDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:control="clr-namespace:MyCustomControls;assembly=MyCustomControls"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <TextBlock Text="Here goes the content!"/>
+    </Grid>
+</control:CustomWindow>
