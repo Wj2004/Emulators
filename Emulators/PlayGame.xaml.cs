@@ -20,8 +20,8 @@ namespace Emulators
             InitializeComponent();
             Buttons = new Dictionary<string, string>();
 
-            CheckDir();
             AddButtons();
+            CheckDir();
         }
 
         //Add buttons to grid at start
