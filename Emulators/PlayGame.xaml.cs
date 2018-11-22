@@ -1,5 +1,4 @@
-﻿using Emulators.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -40,11 +39,7 @@ namespace Emulators
                     Name = "NoFileLabel",
                     Content = "No games found! Drag and drop a emulated game into this window."
                 };
-                
-                noFilesLabel.HorizontalAlignment = HorizontalAlignment.Center;
-                noFilesLabel.VerticalAlignment = VerticalAlignment.Center;
 
-                noFilesLabel.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFE8E8E8"));
                 buttonHolder.Children.Add(noFilesLabel);
             }
             else
@@ -128,7 +123,7 @@ namespace Emulators
             }
             else if (e.ChangeType == WatcherChangeTypes.Deleted)
             {
-                Application.Current.Dispatcher.Invoke((Action)delegate
+                Application.Current.Dispatcher.Invoke(delegate
                 {
                     var child = buttonHolder.Children.OfType<Control>().Where(x => x.Name == buttonName).First();
                     buttonHolder.Children.Remove(child);
@@ -207,7 +202,7 @@ namespace Emulators
                 switch (extension)
                 {
                     case ".txt":
-                        Process.Start("notepad++.exe", $"{file}");
+                        Process.Start($"{file}");
                         Console.WriteLine("Opened a text file!");
                         break;
                     case ".wbfs":
@@ -257,6 +252,12 @@ namespace Emulators
         {
             Application.Current.Dispatcher.Invoke((Action)delegate
             {
+                if (FindName("NoFileLabel") != null)
+                {
+                    var child = buttonHolder.Children.OfType<Control>().Where(x => x.Name == "NoFileLabel").First();
+                    buttonHolder.Children.Remove(child);
+                }
+
                 Button newBtn = new Button
                 {
                     Content = buttonContent,

@@ -11,7 +11,7 @@
 			<ImageBrush/>
 		</Grid.Background>
 		<Grid x:Name="LayoutRoot">
-			<Grid x:Name="HolderGrid" Background="#2D2D30">
+			<Grid x:Name="HolderGrid" Style="{StaticResource BackgroundGrid}">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="162*"/>
 					<RowDefinition Height="307*"/>
@@ -38,7 +38,7 @@
 
 				</Grid>
 				<Viewbox Stretch="Uniform" Margin="30,0">
-					<TextBlock x:Name="TopTitle" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Width="83" Foreground="#FFE0E0E0" Text="All your games!"/>
+					<Label Content="All your games!" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
 				</Viewbox>
 
 			</Grid>
