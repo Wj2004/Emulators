@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace Emulators
 {
@@ -9,6 +10,12 @@ namespace Emulators
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+
+            ResourceDictionary dict = new ResourceDictionary();
+            dict.Source = new Uri("Resources/DarkTheme.xaml", UriKind.Relative);
+
+            Application.Current.Resources.MergedDictionaries.Add(dict);
+
             base.OnStartup(e);
 
             MainWindow mw = new MainWindow();

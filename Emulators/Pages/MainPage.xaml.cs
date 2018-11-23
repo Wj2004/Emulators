@@ -22,7 +22,8 @@ namespace Emulators
 
         private void Button_Settings(object sender, RoutedEventArgs e)
         {
-
+            var settings = new SettingsPage();
+            this.NavigationService.Navigate(settings);
         }
 
         private void Button_About(object sender, RoutedEventArgs e)

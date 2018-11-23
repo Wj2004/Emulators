@@ -5,8 +5,8 @@
 	<Style TargetType="{x:Type Button}">
 		<Setter Property="OverridesDefaultStyle" Value="True"/>
 		<Setter Property="Margin" Value="2"/>
-		<Setter Property="Background" Value="#FF4F4F4F"/>
-		<Setter Property="Foreground" Value="#FFE8E8E8"/>
+		<Setter Property="Background" Value="#FFCFCFCF"/>
+		<Setter Property="Foreground" Value="#FF303030"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="Button">
@@ -23,8 +23,8 @@
 							<Setter Property="Foreground" Value="#FF4788c8" />
 						</Trigger>
 						<Trigger Property="IsEnabled" Value="false">
-							<Setter Property="Background" TargetName="border" Value="#3F4F4F4F"/>
-							<Setter Property="TextElement.Foreground" Value="#3FE8E8E8"/>
+							<Setter Property="Background" TargetName="border" Value="#7FCFCFCF"/>
+							<Setter Property="TextElement.Foreground" Value="#7F303030"/>
 						</Trigger>
 					</ControlTemplate.Triggers>
 				</ControlTemplate>
@@ -33,14 +33,14 @@
 	</Style>
 
 	<Style TargetType="{x:Type Grid}" x:Key="BackgroundGrid">
-		<Setter Property="Background" Value="#2D2D30"/>
+		<Setter Property="Background" Value="#FFFFFF"/>
+	</Style>
+
+	<Style TargetType="{x:Type WrapPanel}">
+		<Setter Property="Background" Value="#FFFFFF"/>
 	</Style>
 
 	<Style TargetType="{x:Type Label}">
-		<Setter Property="Foreground" Value="#FFE0E0E0"/>
-	</Style>
-
-	<Style TargetType="{x:Type Control}">
-		<Setter Property="Foreground" Value="#FFE0E0E0"/>
+		<Setter Property="Foreground" Value="#FF303030"/>
 	</Style>
 </ResourceDictionary>

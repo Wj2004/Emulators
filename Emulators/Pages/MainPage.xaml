@@ -26,7 +26,7 @@
 						<ColumnDefinition Width="1*"/>
 						<ColumnDefinition Width="1*"/>
 					</Grid.ColumnDefinitions>
- 
+
 					<Button Content="Play a game" Click="Button_ChooseGame" Margin="0,0,10,10" BorderThickness="0" Grid.Column="0" Grid.Row="0"/>
 					
 					<!-- Things I'm saving

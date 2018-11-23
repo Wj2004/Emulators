@@ -9,7 +9,7 @@
       Title="PlayGame">
 	<Border BorderThickness="0">
 		<ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Margin="0" Background="#2D2D30">
-			<WrapPanel Name="buttonHolder" Background="#2D2D30" AllowDrop="True" Drop="WrapPanel_Drop" MouseRightButtonDown="Mouseclick"/>
+			<WrapPanel Name="buttonHolder" AllowDrop="True" Drop="WrapPanel_Drop" MouseRightButtonDown="Mouseclick"/>
 		</ScrollViewer>
 	</Border>
 </Page>

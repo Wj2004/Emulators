@@ -36,11 +36,11 @@
 		<Setter Property="Background" Value="#2D2D30"/>
 	</Style>
 
-	<Style TargetType="{x:Type Label}">
-		<Setter Property="Foreground" Value="#FFE0E0E0"/>
+	<Style TargetType="{x:Type WrapPanel}">
+		<Setter Property="Background" Value="#2D2D30"/>
 	</Style>
-	
-	<Style TargetType="{x:Type Control}">
+
+	<Style TargetType="{x:Type Label}">
 		<Setter Property="Foreground" Value="#FFE0E0E0"/>
 	</Style>
 </ResourceDictionary>
