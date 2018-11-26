@@ -12,7 +12,7 @@ namespace Emulators.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.8.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,25 +25,13 @@ namespace Emulators.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string WiiEmu {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LightTheme {
             get {
-                return ((string)(this["WiiEmu"]));
+                return ((bool)(this["LightTheme"]));
             }
             set {
-                this["WiiEmu"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("$\"{AppDomain.CurrentDomain.BaseDirectory}/Emulators/Snes/SnesGT/snesgt.exe\"")]
-        public string SnesEmu {
-            get {
-                return ((string)(this["SnesEmu"]));
-            }
-            set {
-                this["SnesEmu"] = value;
+                this["LightTheme"] = value;
             }
         }
     }

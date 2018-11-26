@@ -11,10 +11,13 @@ namespace Emulators
         protected override void OnStartup(StartupEventArgs e)
         {
 
-            ResourceDictionary dict = new ResourceDictionary();
-            dict.Source = new Uri("Resources/DarkTheme.xaml", UriKind.Relative);
+            ResourceDictionary DarkDicti = new ResourceDictionary();
+            DarkDicti.Source = new Uri("Resources/DarkTheme.xaml", UriKind.Relative);
 
-            Application.Current.Resources.MergedDictionaries.Add(dict);
+            ResourceDictionary LightDicti = new ResourceDictionary();
+            LightDicti.Source = new Uri("Resources/DarkTheme.xaml", UriKind.Relative);
+
+            Application.Current.Resources.MergedDictionaries.Add(DarkDicti);
 
             base.OnStartup(e);
 
