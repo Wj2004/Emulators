@@ -10,5 +10,6 @@
 
 	<Grid>
 		<Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="800" Background="#FF292929"/>
+		<Label Content="Settings" HorizontalAlignment="Center" VerticalAlignment="Center" Height="88" Width="800" FontSize="48" Margin="0,0,0,362" TextOptions.TextHintingMode="Animated"/>
 	</Grid>
 </Page>
