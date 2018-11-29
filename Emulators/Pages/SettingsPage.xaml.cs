@@ -11,5 +11,10 @@ namespace Emulators
         {
             InitializeComponent();
         }
+
+        private void Button_Save(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
     }
 }

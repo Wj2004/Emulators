@@ -25,13 +25,13 @@ namespace Emulators.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool LightTheme {
+        [global::System.Configuration.DefaultSettingValueAttribute("light")]
+        public string Theme {
             get {
-                return ((bool)(this["LightTheme"]));
+                return ((string)(this["Theme"]));
             }
             set {
-                this["LightTheme"] = value;
+                this["Theme"] = value;
             }
         }
     }

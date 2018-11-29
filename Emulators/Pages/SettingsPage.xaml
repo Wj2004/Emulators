@@ -4,12 +4,25 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Emulators"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+	  mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="850"
       Title="SettingsPage">
 
-	<Grid>
-		<Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="800" Background="#FF292929"/>
-		<Label Content="Settings" HorizontalAlignment="Center" VerticalAlignment="Center" Height="88" Width="800" FontSize="48" Margin="0,0,0,362" TextOptions.TextHintingMode="Animated"/>
+	<Grid x:Name="LayoutRoot">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="43*"/>
+			<RowDefinition Height="207*"/>
+		</Grid.RowDefinitions>
+		<Grid.Background>
+			<ImageBrush/>
+		</Grid.Background>
+		<Border Grid.RowSpan="2"/>
+		<Viewbox Stretch="Uniform" HorizontalAlignment="Left" Width="238">
+			<Label Content="Settings" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+		</Viewbox>
+		<!--<ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Grid.Column="1" Height="26" Grid.Row="1">
+				<ComboBoxItem>Light</ComboBoxItem>
+				<ComboBoxItem>Dark</ComboBoxItem>
+			</ComboBox>-->
 	</Grid>
 </Page>
