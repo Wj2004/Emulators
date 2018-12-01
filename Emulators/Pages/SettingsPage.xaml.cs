@@ -24,7 +24,7 @@ namespace Emulators
             this.NavigationService.Navigate(main);
         }
 
-        private void Button_Cancel(object sender, RoutedEventArgs e)
+        private void Button_GoBack(object sender, RoutedEventArgs e)
         {
             var main = new MainPage();
 
@@ -37,6 +37,15 @@ namespace Emulators
             string value = typeItem.Content.ToString();
 
             Emulators.Properties.Settings.Default.Theme = value;
+            Emulators.Properties.Settings.Default.Save();
+
+            string theme = Emulators.Properties.Settings.Default.Theme;
+
+            ResourceDictionary dir = new ResourceDictionary();
+            dir.Source = new Uri($"Resources/{theme}Theme.xaml", UriKind.Relative);
+
+            Application.Current.Resources.MergedDictionaries.Add(dir);
+
         }
     }
 }
