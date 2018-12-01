@@ -16,11 +16,11 @@ namespace Emulators
             ResourceDictionary DarkDicti = new ResourceDictionary();
             DarkDicti.Source = new Uri("Resources/DarkTheme.xaml", UriKind.Relative);
 
-            if (Emulators.Properties.Settings.Default.Theme == "light")
+            if (Emulators.Properties.Settings.Default.Theme == "Light")
             {
                 Application.Current.Resources.MergedDictionaries.Add(LightDicti);
             }
-            else if (Emulators.Properties.Settings.Default.Theme == "dark")
+            else if (Emulators.Properties.Settings.Default.Theme == "Dark")
             {
                 Application.Current.Resources.MergedDictionaries.Add(DarkDicti);
             }

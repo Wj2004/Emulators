@@ -7,22 +7,37 @@
 	  mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="850"
       Title="SettingsPage">
+	<Grid Style="{StaticResource BackgroundGrid}">
+		<Grid x:Name="LayoutRoot">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="177*"/>
+				<ColumnDefinition Width="395*"/>
+				<ColumnDefinition Width="139*"/>
+				<ColumnDefinition Width="139*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="91*"/>
+				<RowDefinition Height="37*"/>
+				<RowDefinition Height="303*"/>
+				<RowDefinition Height="69*"/>
+			</Grid.RowDefinitions>
+			<Grid.Background>
+				<ImageBrush/>
+			</Grid.Background>
 
-	<Grid x:Name="LayoutRoot">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="43*"/>
-			<RowDefinition Height="207*"/>
-		</Grid.RowDefinitions>
-		<Grid.Background>
-			<ImageBrush/>
-		</Grid.Background>
-		<Border Grid.RowSpan="2"/>
-		<Viewbox Stretch="Uniform" HorizontalAlignment="Left" Width="238">
-			<Label Content="Settings" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
-		</Viewbox>
-		<!--<ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Grid.Column="1" Height="26" Grid.Row="1">
-				<ComboBoxItem>Light</ComboBoxItem>
-				<ComboBoxItem>Dark</ComboBoxItem>
-			</ComboBox>-->
+			<Grid x:Name="Settings" Grid.ColumnSpan="4">
+
+			</Grid>
+			<Viewbox Stretch="Uniform" HorizontalAlignment="Left" Width="204" Grid.ColumnSpan="2">
+				<Label Content="Settings" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Height="46"/>
+			</Viewbox>
+			<Label Content="Theme:" HorizontalContentAlignment="Left" Grid.Row="1" VerticalContentAlignment="Center"/>
+			<ComboBox x:Name="ThemeBox" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="0,0,280,0" SelectionChanged="ThemeBox_SelectionChanged">
+				<ComboBoxItem Content="Light" x:Name="Light"></ComboBoxItem>
+				<ComboBoxItem Content="Dark" x:Name="Dark"></ComboBoxItem>
+			</ComboBox>
+			<Button Content="Save settings" Grid.Column="2" HorizontalAlignment="Left" Margin="0" Grid.Row="3" VerticalAlignment="Top" Width="129" Height="59" Click="Button_Save"/>
+			<Button Content="Cancel" Grid.Column="3" HorizontalAlignment="Left" Margin="0" Grid.Row="3" VerticalAlignment="Top" Width="129" Height="59" Click="Button_Cancel"/>
+		</Grid>
 	</Grid>
 </Page>
