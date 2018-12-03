@@ -9,26 +9,15 @@ namespace Emulators
     /// </summary>
     public partial class SettingsPage : Page
     {
-
         public SettingsPage()
         {
             InitializeComponent();
             ThemeBox.Text = Emulators.Properties.Settings.Default.Theme;
         }
 
-        private void Button_Save(object sender, RoutedEventArgs e)
-        {
-            var main = new MainPage();
-
-            Emulators.Properties.Settings.Default.Save();
-            this.NavigationService.Navigate(main);
-        }
-
         private void Button_GoBack(object sender, RoutedEventArgs e)
         {
-            var main = new MainPage();
-
-            this.NavigationService.Navigate(main);
+            SavePopup.IsOpen = true;
         }
 
         private void ThemeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -37,7 +26,6 @@ namespace Emulators
             string value = typeItem.Content.ToString();
 
             Emulators.Properties.Settings.Default.Theme = value;
-            Emulators.Properties.Settings.Default.Save();
 
             string theme = Emulators.Properties.Settings.Default.Theme;
 
@@ -46,6 +34,20 @@ namespace Emulators
 
             Application.Current.Resources.MergedDictionaries.Add(dir);
 
+        }
+
+        private void ButtonPopup_Save(object sender, RoutedEventArgs e)
+        {
+            Emulators.Properties.Settings.Default.Save();
+
+            var main = new MainPage();
+            this.NavigationService.Navigate(main);
+        }
+
+        private void ButtonPopup_Cancel(object sender, RoutedEventArgs e)
+        {
+            var main = new MainPage();
+            this.NavigationService.Navigate(main);
         }
     }
 }
