@@ -34,14 +34,14 @@
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="177*"/>
 				<ColumnDefinition Width="395*"/>
-				<ColumnDefinition Width="139*"/>
-				<ColumnDefinition Width="139*"/>
+				<ColumnDefinition Width="126*"/>
+				<ColumnDefinition Width="152*"/>
 			</Grid.ColumnDefinitions>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="91*"/>
 				<RowDefinition Height="37*"/>
-				<RowDefinition Height="303*"/>
-				<RowDefinition Height="69*"/>
+				<RowDefinition Height="282*"/>
+				<RowDefinition Height="90*"/>
 			</Grid.RowDefinitions>
 			<Grid.Background>
 				<ImageBrush/>
@@ -50,10 +50,10 @@
 			<Grid x:Name="Settings" Grid.ColumnSpan="4">
 
 			</Grid>
-			<Viewbox Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top">
+			<Viewbox Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" Height="78" Width="176">
 				<Label Content="Settings" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
 			</Viewbox>
-			<Viewbox HorizontalAlignment="Left" Grid.Row="1">
+			<Viewbox HorizontalAlignment="Left" Grid.Row="1" Width="70">
 				<Label Content="Theme:" HorizontalContentAlignment="Left" Grid.Row="1" VerticalContentAlignment="Center"/>
 			</Viewbox>
 

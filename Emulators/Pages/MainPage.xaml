@@ -28,9 +28,6 @@
 					</Grid.ColumnDefinitions>
 
 					<Button Content="Play a game" Click="Button_ChooseGame" Margin="0,0,10,10" BorderThickness="0" Grid.Column="0" Grid.Row="0"/>
-					
-					<!-- Things I'm saving
-					Foreground="#FFE8E8E8" Background="#FF4F4F4F"-->
 
 					<Button Content="Settings" Click="Button_Settings" Margin="10,0,1,10" Grid.Column="1" />
 					<Button Content="About" Click="Button_About" Margin="0,10,10,0" Grid.Row="1" IsEnabled="False"/>

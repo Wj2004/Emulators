@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Navigation;
 
 namespace Emulators
 {
@@ -11,6 +13,14 @@ namespace Emulators
         {
             InitializeComponent();
             pageView.Navigate(new MainPage());
+        }
+
+        void HandleNavigating(Object sender, NavigatingCancelEventArgs e)
+        {
+            if (e.NavigationMode == NavigationMode.Forward || e.NavigationMode == NavigationMode.Back)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

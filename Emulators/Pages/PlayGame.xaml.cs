@@ -278,5 +278,12 @@ namespace Emulators
         {
             return !Directory.EnumerateFileSystemEntries(path).Any();
         }
+
+
+        private void Button_Back(object sender, RoutedEventArgs e)
+        {
+            var main = new MainPage();
+            this.NavigationService.Navigate(main);
+        }
     }
 }
