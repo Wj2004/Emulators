@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 
 namespace Emulators
 {
@@ -10,15 +9,28 @@ namespace Emulators
     /// </summary>
     public partial class SettingsPage : Page
     {
+        String oldTheme;
+
         public SettingsPage()
         {
             InitializeComponent();
+            oldTheme = Emulators.Properties.Settings.Default.Theme;
+
             ThemeBox.Text = Emulators.Properties.Settings.Default.Theme;
         }
 
         private void Button_GoBack(object sender, RoutedEventArgs e)
         {
-            Overlay.Visibility = Visibility.Visible;
+            if (oldTheme != Emulators.Properties.Settings.Default.Theme)
+            {
+                Overlay.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                var main = new MainPage();
+                this.NavigationService.Navigate(main);
+            }
+            
         }
 
         private void ThemeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -34,7 +46,6 @@ namespace Emulators
             dir.Source = new Uri($"Resources/{theme}Theme.xaml", UriKind.Relative);
 
             Application.Current.Resources.MergedDictionaries.Add(dir);
-
         }
 
         private void ButtonPopup_Save(object sender, RoutedEventArgs e)
@@ -45,10 +56,15 @@ namespace Emulators
             this.NavigationService.Navigate(main);
         }
 
-        private void ButtonPopup_Cancel(object sender, RoutedEventArgs e)
+        private void ButtonPopup_Discard(object sender, RoutedEventArgs e)
         {
             var main = new MainPage();
             this.NavigationService.Navigate(main);
+        }
+
+        private void ButtonPopup_Cancel(object sender, RoutedEventArgs e)
+        {
+            Overlay.Visibility = Visibility.Collapsed;
         }
     }
 }

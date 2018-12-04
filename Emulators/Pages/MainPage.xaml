@@ -38,7 +38,7 @@
 
 				</Grid>
 				<Viewbox Stretch="Uniform" Margin="30,0">
-					<Label Content="All your games!" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+					<Label Content="Emu Con" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
 				</Viewbox>
 
 			</Grid>

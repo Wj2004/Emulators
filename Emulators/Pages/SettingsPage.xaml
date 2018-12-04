@@ -13,10 +13,20 @@
 			<Grid.Background>
 				<SolidColorBrush Color="Black" Opacity=".65"/>
 			</Grid.Background>
-			<Grid Style="{DynamicResource BackgroundGrid}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="348">
-				<Label FontSize="20">Do you want to save the settings?</Label>
-				<Button Content="Save settings" Height="44" VerticalAlignment="Center" HorizontalAlignment="Left" Click="ButtonPopup_Save" Margin="133,46,0,10" Width="100"/>
-				<Button Content="Discard Settings" Height="44" VerticalAlignment="Center" HorizontalAlignment="Left" Click="ButtonPopup_Cancel" Margin="238,46,0,10" Width="100"/>
+			<Grid Style="{DynamicResource BackgroundGrid}" HorizontalAlignment="Center" Width="500" Height="125" VerticalAlignment="Center">
+				<Viewbox HorizontalAlignment="Left" VerticalAlignment="Top" Height="74" Width="200">
+					<Label FontSize="20" Grid.RowSpan="2" Grid.ColumnSpan="2">Apply settings?</Label>
+				</Viewbox>
+				<Grid Height="68" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="500">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="3*"/>
+						<ColumnDefinition Width="3*"/>
+						<ColumnDefinition Width="3*"/>
+					</Grid.ColumnDefinitions>
+					<Button Content="Apply" Click="ButtonPopup_Save" Margin="10,-2,0,0" HorizontalAlignment="Left" Width="147" Height="60" VerticalAlignment="Top"/>
+					<Button Content="Discard" Height="60" VerticalAlignment="Top" Click="ButtonPopup_Discard" Margin="0,-2,0,0" HorizontalAlignment="Left" Width="156" Grid.Column="1"/>
+					<Button Content="Cancel" Height="60" VerticalAlignment="Top" Click="ButtonPopup_Cancel" Margin="0,-2,0,0" HorizontalAlignment="Left" Width="157" Grid.Column="2"/>
+				</Grid>
 			</Grid>
 		</Grid>
 
@@ -40,15 +50,24 @@
 			<Grid x:Name="Settings" Grid.ColumnSpan="4">
 
 			</Grid>
-			<Viewbox Stretch="Uniform" HorizontalAlignment="Left" Width="204" Grid.ColumnSpan="2">
-				<Label Content="Settings" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" Height="46"/>
+			<Viewbox Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top">
+				<Label Content="Settings" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
 			</Viewbox>
-			<Label Content="Theme:" HorizontalContentAlignment="Left" Grid.Row="1" VerticalContentAlignment="Center"/>
-			<ComboBox x:Name="ThemeBox" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="0,0,280,0" SelectionChanged="ThemeBox_SelectionChanged">
+			<Viewbox HorizontalAlignment="Left" Grid.Row="1">
+				<Label Content="Theme:" HorizontalContentAlignment="Left" Grid.Row="1" VerticalContentAlignment="Center"/>
+			</Viewbox>
+
+			<ComboBox x:Name="ThemeBox" VerticalContentAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" SelectionChanged="ThemeBox_SelectionChanged" Width="385">
+				<ComboBox.ItemContainerStyle>
+					<Style TargetType="ComboBoxItem">
+						<Setter Property="Height" Value="Auto"/>
+					</Style>
+				</ComboBox.ItemContainerStyle>
+
 				<ComboBoxItem Content="Light" x:Name="Light"></ComboBoxItem>
 				<ComboBoxItem Content="Dark" x:Name="Dark"></ComboBoxItem>
 			</ComboBox>
-			<Button Content="Back" Grid.Column="3" HorizontalAlignment="Left" Margin="0" Grid.Row="3" VerticalAlignment="Top" Width="129" Height="59" Click="Button_GoBack"/>
+			<Button Content="Back" Grid.Column="3" Margin="0,0,10,10" Grid.Row="3" Click="Button_GoBack"/>
 		</Grid>
 	</Grid>
 </Page>
