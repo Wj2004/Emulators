@@ -39,10 +39,6 @@
 		<Setter Property="Background" Value="#FFFFFF"/>
 	</Style>
 
-	<Style TargetType="{x:Type Grid}" x:Key="PopupGrid">
-		<Setter Property="Background" Value="#FFFFFF"/>
-	</Style>
-
 	<Style TargetType="{x:Type WrapPanel}">
 		<Setter Property="Background" Value="#FFFFFF"/>
 	</Style>
@@ -59,5 +55,4 @@
 	<Style TargetType="{x:Type CheckBox}">
 		<Setter Property="Foreground" Value="#FF303030"/>
 	</Style>
-	
 </ResourceDictionary>

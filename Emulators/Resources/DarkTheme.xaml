@@ -39,10 +39,6 @@
 		<Setter Property="Background" Value="#2D2D30"/>
 	</Style>
 
-	<Style TargetType="{x:Type Grid}" x:Key="PopupGrid">
-		<Setter Property="Background" Value="#FF232323"/>
-	</Style>
-
 	<Style TargetType="{x:Type WrapPanel}">
 		<Setter Property="Background" Value="#2D2D30"/>
 	</Style>

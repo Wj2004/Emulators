@@ -7,16 +7,20 @@
 	  mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="850"
       Title="SettingsPage">
-	<Grid Style="{DynamicResource BackgroundGrid}">
-		<Popup Name="SavePopup" Placement="Center" AllowsTransparency="True" IsOpen="False">
-			<Grid Style="{DynamicResource PopupGrid}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="348">
-				<Label FontSize="20">Do you want to save the settings?</Label>
-				<Button Content="Save settings" Height="44" VerticalAlignment="Center" HorizontalAlignment="Left" Click="ButtonPopup_Save" Margin="165,46,0,10" Width="85"/>
-				<Button Content="Discard Settings" Height="44" VerticalAlignment="Center" HorizontalAlignment="Left" Click="ButtonPopup_Cancel" Margin="255,46,0,10"/>
-			</Grid>
-		</Popup>
+	<Grid x:Name="LayoutRoot" Style="{DynamicResource BackgroundGrid}">
 
-		<Grid x:Name="LayoutRoot">
+		<Grid x:Name="Overlay" Panel.ZIndex="1000" Visibility="Collapsed">
+			<Grid.Background>
+				<SolidColorBrush Color="Black" Opacity=".65"/>
+			</Grid.Background>
+			<Grid Style="{DynamicResource BackgroundGrid}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="348">
+				<Label FontSize="20">Do you want to save the settings?</Label>
+				<Button Content="Save settings" Height="44" VerticalAlignment="Center" HorizontalAlignment="Left" Click="ButtonPopup_Save" Margin="133,46,0,10" Width="100"/>
+				<Button Content="Discard Settings" Height="44" VerticalAlignment="Center" HorizontalAlignment="Left" Click="ButtonPopup_Cancel" Margin="238,46,0,10" Width="100"/>
+			</Grid>
+		</Grid>
+
+		<Grid>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="177*"/>
 				<ColumnDefinition Width="395*"/>

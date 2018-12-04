@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace Emulators
 {
@@ -17,7 +18,7 @@ namespace Emulators
 
         private void Button_GoBack(object sender, RoutedEventArgs e)
         {
-            SavePopup.IsOpen = true;
+            Overlay.Visibility = Visibility.Visible;
         }
 
         private void ThemeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
