@@ -35,7 +35,7 @@
 
 				</Grid>
 				<Viewbox Stretch="Uniform" Margin="30,0">
-					<Label Content="Emu Con" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+					<Label Content="Emu Connector" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
 				</Viewbox>
 
 			</Grid>
