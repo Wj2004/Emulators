@@ -40,12 +40,7 @@ namespace Emulators
 
             Emulators.Properties.Settings.Default.Theme = value;
 
-            string theme = Emulators.Properties.Settings.Default.Theme;
-
-            ResourceDictionary dir = new ResourceDictionary();
-            dir.Source = new Uri($"Resources/{theme}Theme.xaml", UriKind.Relative);
-
-            Application.Current.Resources.MergedDictionaries.Add(dir);
+            ChangeTheme();
         }
 
         private void ButtonPopup_Save(object sender, RoutedEventArgs e)
@@ -57,7 +52,12 @@ namespace Emulators
         }
 
         private void ButtonPopup_Discard(object sender, RoutedEventArgs e)
-        {
+        { 
+            Emulators.Properties.Settings.Default.Theme = oldTheme;
+            Emulators.Properties.Settings.Default.Save();
+
+            ChangeTheme();
+
             var main = new MainPage();
             this.NavigationService.Navigate(main);
         }
@@ -65,6 +65,17 @@ namespace Emulators
         private void ButtonPopup_Cancel(object sender, RoutedEventArgs e)
         {
             Overlay.Visibility = Visibility.Collapsed;
+        }
+
+
+        void ChangeTheme()
+        {
+            string theme = Emulators.Properties.Settings.Default.Theme;
+
+            ResourceDictionary dir = new ResourceDictionary();
+            dir.Source = new Uri($"Resources/{theme}Theme.xaml", UriKind.Relative);
+
+            Application.Current.Resources.MergedDictionaries.Add(dir);
         }
     }
 }
