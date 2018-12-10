@@ -34,13 +34,7 @@ namespace Emulators
 
             if (IsDirectoryEmpty(baseFolder))
             {
-                var noFilesLabel = new Label
-                {
-                    Name = "NoFileLabel",
-                    Content = "No games found! Drag and drop a emulated game into this window."
-                };
-
-                buttonHolder.Children.Add(noFilesLabel);
+                NoFiles.Visibility = Visibility.Visible;
             }
             else
             {
@@ -57,10 +51,10 @@ namespace Emulators
             }
         }
 
+        #region checkDirForChanges
         //Drop file into window
         private void WrapPanel_Drop(object sender, DragEventArgs e)
         {
-
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 var folderName = $"{AppDomain.CurrentDomain.BaseDirectory}Games";
@@ -78,7 +72,6 @@ namespace Emulators
             }
         } 
 
-        #region checkDirForChanges
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
         public void CheckDir()
         {
@@ -120,6 +113,15 @@ namespace Emulators
 
                 CreateButton(buttonContent, buttonName);
                 Buttons.Add(buttonName, e.FullPath);
+
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    var baseFolder = $"{AppDomain.CurrentDomain.BaseDirectory}Games";
+                    if (!IsDirectoryEmpty(baseFolder))
+                    {
+                        NoFiles.Visibility = Visibility.Collapsed;
+                    }
+                });
             }
             else if (e.ChangeType == WatcherChangeTypes.Deleted)
             {
@@ -129,7 +131,19 @@ namespace Emulators
                     buttonHolder.Children.Remove(child);
                 });
                 Buttons.Remove(buttonName);
+
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    var baseFolder = $"{AppDomain.CurrentDomain.BaseDirectory}Games";
+                    if (IsDirectoryEmpty(baseFolder))
+                    {
+                        NoFiles.Visibility = Visibility.Visible;
+                    }
+                });
             }
+
+
+
         }
 
         //When file is renamed

@@ -17,11 +17,15 @@
 				<ColumnDefinition Width="632*"/>
 				<ColumnDefinition Width="150*"/>
 			</Grid.ColumnDefinitions>
-			<Button Content="Back" Margin="0,0,0,10" Click="Button_Back" Grid.Column="1" Grid.Row="1"/>
-
+			<Button Content="Back" Margin="0,0,0,10" Click="Button_Back" Grid.Column="1" Grid.Row="1" BorderThickness="2"/>
 		</Grid>
+
+		<Grid x:Name="NoFiles" Panel.ZIndex="100" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+			<Label Content="Theres no files in your games folder. Right-click to open folder, or drag and drop a file into this window"/>
+		</Grid>
+
 		<Border BorderThickness="0">
-			<ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Margin="0" Background="#2D2D30">
+			<ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Margin="0">
 				<WrapPanel Name="buttonHolder" AllowDrop="True" Drop="WrapPanel_Drop" MouseRightButtonDown="Mouseclick"/>
 			</ScrollViewer>
 		</Border>
