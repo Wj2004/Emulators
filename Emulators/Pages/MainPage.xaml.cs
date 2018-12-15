@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Emulators.Pages;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -28,7 +29,8 @@ namespace Emulators
 
         private void Button_About(object sender, RoutedEventArgs e)
         {
-
+            var settings = new ConsoleSelection();
+            this.NavigationService.Navigate(settings);
         }
 
         private void Button_Quit(object sender, RoutedEventArgs e)
