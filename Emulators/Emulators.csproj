@@ -56,13 +56,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="OpenFile.cs" />
-    <Compile Include="Pages\ConsoleSelection.xaml.cs">
-      <DependentUpon>ConsoleSelection.xaml</DependentUpon>
+    <Compile Include="Pages\GameSelection.xaml.cs">
+      <DependentUpon>GameSelection.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Page Include="Pages\ConsoleSelection.xaml">
+    <Page Include="Pages\GameSelection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

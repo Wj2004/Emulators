@@ -8,7 +8,12 @@
       d:DesignHeight="400" d:DesignWidth="800"
       Title="PlayGame">
 	<Grid x:Name="LayoutRoot">
-		<Grid x:Name="OverlayButton" Panel.ZIndex="100" Margin="0,0,17,0">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="39*"/>
+			<RowDefinition Height="361*"/>
+		</Grid.RowDefinitions>
+
+		<Grid x:Name="OverlayButton" Panel.ZIndex="100" Margin="0,0,17,0" Grid.RowSpan="2">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="36*"/>
 				<RowDefinition Height="10*"/>
@@ -20,15 +25,13 @@
 			<Button Content="Back" Margin="0,0,0,10" Click="Button_Back" Grid.Column="1" Grid.Row="1" BorderThickness="2"/>
 		</Grid>
 
-		<Grid x:Name="NoFiles" Panel.ZIndex="100" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+		<Grid x:Name="NoFiles" Panel.ZIndex="100" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" Margin="400,169,400,192" Grid.Row="1" Height="0" Width="0">
 			<Label Content="Theres no files in your games folder. Right-click to open folder, or drag and drop a file into this window"/>
 		</Grid>
 
-		<Border BorderThickness="0">
-			<ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Margin="0">
-				<WrapPanel Name="buttonHolder" AllowDrop="True" Drop="WrapPanel_Drop" MouseRightButtonDown="Mouseclick"/>
-			</ScrollViewer>
-		</Border>
+		<ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Grid.Row="1">
+			<WrapPanel Name="buttonHolder" AllowDrop="True" Drop="WrapPanel_Drop" MouseRightButtonDown="Mouseclick"/>
+		</ScrollViewer>
 	</Grid>
 
 </Page>

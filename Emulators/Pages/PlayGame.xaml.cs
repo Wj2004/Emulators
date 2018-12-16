@@ -277,7 +277,7 @@ namespace Emulators
                     Content = buttonContent,
                     Name = buttonName.RemoveInvalidChars(),
                     BorderThickness = new Thickness(1),
-                    Width = 260,
+                    Width = 100,
                     Height = 100
                 };
 

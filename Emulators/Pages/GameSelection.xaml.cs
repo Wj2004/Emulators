@@ -3,9 +3,9 @@ using System.Windows.Controls;
 
 namespace Emulators.Pages
 {
-    public partial class ConsoleSelection : Page
+    public partial class GameSelection : Page
     {
-        public ConsoleSelection()
+        public GameSelection()
         {
             InitializeComponent();
         }

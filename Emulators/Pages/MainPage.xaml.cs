@@ -29,7 +29,7 @@ namespace Emulators
 
         private void Button_About(object sender, RoutedEventArgs e)
         {
-            var settings = new ConsoleSelection();
+            var settings = new GameSelection();
             this.NavigationService.Navigate(settings);
         }
 
