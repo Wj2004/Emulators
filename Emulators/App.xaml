@@ -6,6 +6,7 @@
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="Resources/DarkTheme.xaml"/>
 				<ResourceDictionary Source="Resources/ScrollbarDir.xaml"/>
+				<ResourceDictionary Source="Resources/GameSelButton.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Application.Resources>

@@ -20,6 +20,7 @@
 
 			<ScrollViewer Grid.Row="2">
 				<WrapPanel>
+					<Button Template="{StaticResource SelectButton}">"Content"</Button>
 					<Button Height="100" Width="100">Zelda</Button>
 					<Button Height="100" Width="100">Mario</Button>
 					<Button Height="100" Width="100">Megaman</Button>
@@ -32,6 +33,8 @@
 					<Button Height="100" Width="100">Kirby</Button>
 				</WrapPanel>
 			</ScrollViewer>
+
+
 
 			<Grid x:Name="TopBar">
 				<Grid.ColumnDefinitions>
