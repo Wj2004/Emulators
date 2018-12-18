@@ -9,6 +9,28 @@
 		<Setter Property="Background" Value="#FFFFFF"/>
 	</Style>
 
+	<Style TargetType="{x:Type Grid}" x:Key="BackgroundGrid">
+		<Setter Property="Background" Value="#FFFFFF"/>
+	</Style>
+
+	<Style TargetType="{x:Type WrapPanel}">
+		<Setter Property="Background" Value="#FFFFFF"/>
+	</Style>
+
+	<Style TargetType="{x:Type Label}">
+		<Setter Property="Foreground" Value="#FF303030"/>
+	</Style>
+	
+	<Style TargetType="{x:Type Border}">
+		<Setter Property="Background" Value="#FFFFFF"/>
+		<Setter Property="BorderThickness" Value="0"/>
+	</Style>
+
+	<Style TargetType="{x:Type CheckBox}">
+		<Setter Property="Foreground" Value="#FF303030"/>
+	</Style>
+	
+	<!-- Buttons down from here -->
 	<Style TargetType="{x:Type Button}">
 		<Setter Property="OverridesDefaultStyle" Value="True"/>
 		<Setter Property="Margin" Value="2"/>
@@ -39,24 +61,29 @@
 		</Setter>
 	</Style>
 
-	<Style TargetType="{x:Type Grid}" x:Key="BackgroundGrid">
-		<Setter Property="Background" Value="#FFFFFF"/>
-	</Style>
-
-	<Style TargetType="{x:Type WrapPanel}">
-		<Setter Property="Background" Value="#FFFFFF"/>
-	</Style>
-
-	<Style TargetType="{x:Type Label}">
+	<Style x:Key="SelectButton" TargetType="Button">
+		<Setter Property="Margin" Value="2"/>
 		<Setter Property="Foreground" Value="#FF303030"/>
-	</Style>
-	
-	<Style TargetType="{x:Type Border}">
-		<Setter Property="Background" Value="#FFFFFF"/>
-		<Setter Property="BorderThickness" Value="0"/>
-	</Style>
-
-	<Style TargetType="{x:Type CheckBox}">
-		<Setter Property="Foreground" Value="#FF303030"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Button">
+					<Border BorderThickness="0">
+						<Grid Height="100" Width="100">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="3*"/>
+								<RowDefinition Height="2*"/>
+							</Grid.RowDefinitions>
+							<Image Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Source="../Pics/test1.png"></Image>
+							<ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</Grid>
+					</Border>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter Property="Foreground" Value="#FF4788c8" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
 	</Style>
 </ResourceDictionary>
