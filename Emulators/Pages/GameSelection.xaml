@@ -24,6 +24,10 @@
 				<Label Grid.Row="0" FontSize="36">Games</Label>
 			</Grid>
 
+			<Grid Panel.ZIndex="100" Name="ThemeChanger">
+				<Button HorizontalAlignment="Right" VerticalAlignment="Center"></Button>
+			</Grid>
+			
 
 			<ScrollViewer Grid.Row="2">
 				<WrapPanel x:Name="ButtonHolder" MouseLeftButtonDown="DoubleClickWrap"/>

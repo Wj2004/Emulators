@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Emulators.Pages
@@ -20,7 +19,7 @@ namespace Emulators.Pages
             ButtonKeys = new Dictionary<string, string>();
 
             PlaceButtons();
-            Sort();
+            SortButtons();
             //Console();
         }
 
@@ -32,7 +31,7 @@ namespace Emulators.Pages
                 Directory.CreateDirectory(baseFolder);
             }
 
-            var folder = Directory.GetFileSystemEntries($"{baseFolder}");
+            var folder = Directory.GetFiles($"{baseFolder}", "*.*", SearchOption.AllDirectories);
             foreach (string file in folder)
             {
                 MakeButton($"{Path.GetFileNameWithoutExtension(file).RemoveInvalidChars()}", $"{Path.GetFileNameWithoutExtension(file)}", $"{Path.GetFullPath(file)}");
@@ -41,7 +40,7 @@ namespace Emulators.Pages
 
         public void MakeButton(string name, string content, string path)
         {
-            Button newBtn = new Button();
+            Button newBtn = new System.Windows.Controls.Button();
             newBtn.SetResourceReference(StyleProperty, "SelectButton");
             newBtn.Name = name;
             newBtn.Content = content;
@@ -54,7 +53,7 @@ namespace Emulators.Pages
 
         public void ClickButton(object sender, RoutedEventArgs e)
         {
-            var buttonName = (Button)sender;
+            var buttonName = (System.Windows.Controls.Button)sender;
             var file = ButtonKeys[buttonName.Name];
 
             Process.Start($"{file}");
@@ -69,27 +68,26 @@ namespace Emulators.Pages
         #region sorting
         private void SortBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Sort();
+            SortButtons();
         }
 
-        public void Sort()
+        public void SortButtons()
         {
             ComboBoxItem sortItem = (ComboBoxItem)SortBy.SelectedItem;
             string sortby = sortItem.Content.ToString();
 
-            IEnumerable<Button> orderedButtons;
+            IEnumerable<Button> orderedButtons = ButtonHolder.Children.OfType<System.Windows.Controls.Button>();
+            List<ButtonCopy> lastAccessTimes = new List<ButtonCopy>();
+
+            foreach (Button button in orderedButtons)
+            {
+                var file = ButtonKeys[button.Name];
+                lastAccessTimes.Add(new ButtonCopy(button.Name, button, File.GetLastWriteTime(file)));
+            }
 
             switch (sortby)
             {
                 case "Recent":
-                    orderedButtons = ButtonHolder.Children.OfType<Button>();
-                    List<ButtonSort> lastAccessTimes = new List<ButtonSort>();
-
-                    foreach (Button button in orderedButtons)
-                    {
-                        var file = ButtonKeys[button.Name];
-                        lastAccessTimes.Add(new ButtonSort(button.Name, button, File.GetLastAccessTime(file)));
-                    }
                     lastAccessTimes.Sort((x, y) => DateTime.Compare(y.Time, x.Time));
                     orderedButtons = lastAccessTimes.Select(x => x.Button);
                     break;
@@ -104,7 +102,7 @@ namespace Emulators.Pages
                     break;
             }
 
-            foreach (Button button in orderedButtons)
+            foreach (System.Windows.Controls.Button button in orderedButtons)
             {
                 Application.Current.Dispatcher.Invoke((Action)delegate
                 {
@@ -114,7 +112,6 @@ namespace Emulators.Pages
             }
         }
         #endregion
-
 
         public void DoubleClickWrap(object sender, MouseButtonEventArgs e)
         {
@@ -126,13 +123,14 @@ namespace Emulators.Pages
         }
     }
 
-    public class ButtonSort
+    public class ButtonCopy
     {
         public string Name { get; set; }
         public Button Button { get; set; }
+        //public string PathToFile { get; set; }
         public DateTime Time { get; set; }
 
-        public ButtonSort(string name, Button button, DateTime time)
+        public ButtonCopy(string name, Button button, DateTime time)
         {
             Name = name;
             Button = button;

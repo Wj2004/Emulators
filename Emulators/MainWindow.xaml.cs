@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Emulators.Pages;
+using System;
 using System.Windows;
 using System.Windows.Navigation;
 
@@ -12,7 +13,7 @@ namespace Emulators
         public MainWindow()
         {
             InitializeComponent();
-            pageView.Navigate(new MainPage());
+            pageView.Navigate(new GameSelection());
         }
 
         void HandleNavigating(Object sender, NavigatingCancelEventArgs e)
