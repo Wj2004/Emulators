@@ -11,64 +11,55 @@
 	<Grid x:Name="LayoutRoot" Style="{DynamicResource BackgroundGrid}">
 		<Grid x:Name="Layout">
 			<Grid.RowDefinitions>
-				<RowDefinition Height="57*"/>
-				<RowDefinition Height="26*"/>
-				<RowDefinition Height="357*"/>
+				<RowDefinition Height="61"/>
+				<RowDefinition Height="40"/>
+				<RowDefinition Height="349*"/>
 			</Grid.RowDefinitions>
 
-			<Label Grid.Row="0" FontSize="36">Games</Label>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition Width="677"/>
+				</Grid.ColumnDefinitions>
+				<Label Grid.Row="0" FontSize="36">Games</Label>
+			</Grid>
+
 
 			<ScrollViewer Grid.Row="2">
-				<WrapPanel>
-					<Button Style="{StaticResource SelectButton}">Zelda</Button>
-					<Button Style="{StaticResource SelectButton}">Mario</Button>
-					<Button Style="{StaticResource SelectButton}">Megaman</Button>
-					<Button Style="{StaticResource SelectButton}">Button</Button>
-					<Button Style="{StaticResource SelectButton}">Star Wars</Button>
-					<Button Style="{StaticResource SelectButton}">Tetris</Button>
-					<Button Style="{StaticResource SelectButton}">Minecraft</Button>
-					<Button Style="{StaticResource SelectButton}">Game</Button>
-					<Button Style="{StaticResource SelectButton}">Smash Bros Melee</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-					<Button Style="{StaticResource SelectButton}">Kirby</Button>
-				</WrapPanel>
+				<WrapPanel x:Name="ButtonHolder" MouseLeftButtonDown="DoubleClickWrap"/>
 			</ScrollViewer>
 
 
 
-			<Grid x:Name="TopBar" Grid.Row="1">
+			<Grid x:Name="TopBar" Grid.Row="1" Background="#FF171717">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="53*"/>
-					<ColumnDefinition Width="174*"/>
-					<ColumnDefinition Width="44*"/>
-					<ColumnDefinition Width="140*"/>
-					<ColumnDefinition Width="389*"/>
-
+					<ColumnDefinition Width="207"/>
+					<ColumnDefinition Width="213"/>
+					<ColumnDefinition Width="380"/>
 				</Grid.ColumnDefinitions>
-				<Label>Console</Label>
-				<ComboBox Grid.Column="1" HorizontalAlignment="Left" Width="144" Height="27" VerticalAlignment="Top" Margin="0,0,0,-1">
-					<ComboBoxItem>Test1</ComboBoxItem>
-					<ComboBoxItem>Test2</ComboBoxItem>
-					<ComboBoxItem>Test3</ComboBoxItem>
-				</ComboBox>
 
-				<Label Grid.Column="2" Margin="0,0,120,0" Grid.ColumnSpan="2">Search</Label>
-				<TextBox Grid.Column="3" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" Width="120" VerticalAlignment="Top" VerticalContentAlignment="Center" RenderTransformOrigin="0.358,0.5"/>
+				<WrapPanel Background="{x:Null}" VerticalAlignment="Center" Height="28">
+					<Label>Console</Label>
+					<ComboBox x:Name="ConsoleFilter" Width="144" Height="27" VerticalAlignment="Top" SelectedIndex="0">
+						<ComboBoxItem Content="All"/>
+						<ComboBoxItem Content="Wii"/>
+						<ComboBoxItem Content="N64"/>
+					</ComboBox>
+				</WrapPanel>
+
+				<WrapPanel Grid.Column="2" Background="{x:Null}" VerticalAlignment="Center" Height="28">
+					<Label>Search</Label>
+					<TextBox x:Name="Searchbar"  HorizontalAlignment="Left" Height="27" TextWrapping="Wrap" Width="158" VerticalContentAlignment="Center"/>
+				</WrapPanel>
+
+				<WrapPanel Grid.Column="1" Background="{x:Null}" VerticalAlignment="Center" Height="28">
+					<Label>Sort by</Label>
+					<ComboBox x:Name="SortBy" Width="144" Height="27" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="SortBy_SelectionChanged">
+						<ComboBoxItem Content="Recent"/>
+						<ComboBoxItem Content="A-Z"/>
+						<ComboBoxItem Content="Z-A"/>
+					</ComboBox>
+				</WrapPanel>
 			</Grid>
 		</Grid>
 	</Grid>

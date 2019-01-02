@@ -74,7 +74,13 @@
 								<RowDefinition Height="2*"/>
 							</Grid.RowDefinitions>
 							<Image Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Source="../Pics/test1.png"></Image>
-							<ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+							<ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center">
+								<ContentPresenter.Resources>
+									<Style TargetType="TextBlock">
+										<Setter Property="TextTrimming" Value="CharacterEllipsis"></Setter>
+									</Style>
+								</ContentPresenter.Resources>
+							</ContentPresenter>
 						</Grid>
 					</Border>
 					<ControlTemplate.Triggers>
