@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -12,6 +13,7 @@ namespace Emulators.Pages
     public partial class GameSelection : Page
     {
         private static Dictionary<string, string> ButtonKeys;
+        public List<ButtonCopy> AllButtons = new List<ButtonCopy>();
 
         public GameSelection()
         {
@@ -21,6 +23,14 @@ namespace Emulators.Pages
             PlaceButtons();
             SortButtons();
             //Console();
+
+
+            //AllButtons:
+            foreach (Button button in ButtonHolder.Children)
+            {
+                var file = ButtonKeys[button.Name];
+                AllButtons.Add(new ButtonCopy(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file), Path.GetExtension(file)));
+            }
         }
 
         public void PlaceButtons()
@@ -75,31 +85,42 @@ namespace Emulators.Pages
             ComboBoxItem consoleItem = (ComboBoxItem)ConsoleFilter.SelectedItem;
             string console = consoleItem.Content.ToString();
 
-
-            List<ButtonCopy> buttons = new List<ButtonCopy>();
-            foreach (Button button in ButtonHolder.Children)
-            {
-                var file = ButtonKeys[button.Name];
-                buttons.Add(new ButtonCopy(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file), Path.GetExtension(file)));
-            }
-
             List<ButtonCopy> final = new List<ButtonCopy>();
-            final = buttons;
+            final = AllButtons;
+
+
+            //final.First().Console;
+
 
             switch (console)
             {
+                case "All":
+                    final = AllButtons;
+                    break;
                 case "N64":
                     string[] n64Extensions = { ".z64", ".v64", ".n64" };
-                    foreach (string fileExtension in buttons.Select(x => x.Extension))
-                    {
-                        //final.Remove(buttons.Select(x => x.Extension));
-                    }
+                    final.RemoveAll(x => x.Extension != ".z64");
                     break;
                 default:
+                    final = AllButtons;
                     break;
             }
 
-            foreach (Button button in buttons.Select(x => x.Button))
+            foreach (ButtonCopy i in final)
+            {
+                Debug.WriteLine($"{i.Extension}");
+            }
+
+            foreach (ButtonCopy i in AllButtons)
+            {
+                IEnumerable children = LogicalTreeHelper.GetChildren(ButtonHolder);
+                foreach (Button child in children)
+                {
+                    child.Visibility = Visibility.Collapsed;
+                }
+            }
+
+            foreach (Button button in AllButtons.Select(x => x.Button))
             {
                 Application.Current.Dispatcher.Invoke((Action)delegate
                 {
@@ -166,6 +187,7 @@ namespace Emulators.Pages
         public string Content { get; set; }
         public DateTime Time { get; set; }
         public string Extension { get; set; }
+        public ConsoleEnum Console { get; set; }
 
         public ButtonCopy(string name, Button button, string content, DateTime time)
         {
@@ -179,9 +201,38 @@ namespace Emulators.Pages
         public ButtonCopy(string name, Button button, string content, DateTime time, string extension) : this(name, button, content, time)
         {
             Extension = extension;
+            Console = GetConsoleFromExtension(extension);
+        }
+
+        private ConsoleEnum GetConsoleFromExtension(string extension)
+        {
+            switch (extension)
+            {
+                //Wii
+                case ".wbfs":
+                case ".cISO":
+                case ".wdf":
+                case ".wdf1":
+                case ".wdf2":
+                case ".gcm":
+                    return ConsoleEnum.Wii;
+                //Nintendo 64
+                case ".z64":
+                case ".v64":
+                case ".n64":
+                    return ConsoleEnum.Nintendo64;
+                default:
+                    return ConsoleEnum.Unknown;
+            }
         }
     }
 
+    public enum ConsoleEnum
+    {
+        Unknown,
+        Wii,
+        Nintendo64
+    }
     //public class ButtonCopy
     //{
     //    public string Name { get; set; }
