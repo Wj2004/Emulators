@@ -44,14 +44,14 @@
 
 				<WrapPanel Background="{x:Null}" VerticalAlignment="Center" Height="28">
 					<Label>Console</Label>
-					<ComboBox x:Name="ConsoleFilter" Width="144" Height="27" VerticalAlignment="Top" SelectedIndex="0">
+					<ComboBox x:Name="ConsoleFilter" Width="144" Height="27" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="Console_SelectionChanged">
 						<ComboBoxItem Content="All"/>
 						<ComboBoxItem Content="Wii"/>
 						<ComboBoxItem Content="N64"/>
 					</ComboBox>
 				</WrapPanel>
 
-				<WrapPanel Grid.Column="2" Background="{x:Null}" VerticalAlignment="Center" Height="28">
+				<WrapPanel Grid.Column="2" Background="{x:Null}" VerticalAlignment="Center" Height="28" Visibility="Collapsed">
 					<Label>Search</Label>
 					<TextBox x:Name="Searchbar"  HorizontalAlignment="Left" Height="27" TextWrapping="Wrap" Width="158" VerticalContentAlignment="Center"/>
 				</WrapPanel>

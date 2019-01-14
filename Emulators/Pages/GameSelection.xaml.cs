@@ -59,16 +59,54 @@ namespace Emulators.Pages
             Process.Start($"{file}");
         }
 
-        public void Console()
-        {
-            ComboBoxItem consoleItem = (ComboBoxItem)SortBy.SelectedItem;
-            string console = consoleItem.Content.ToString();
-        }
-
         #region sorting
         private void SortBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SortButtons();
+        }
+        private void Console_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ConsoleSort();
+        }
+
+
+        public void ConsoleSort()
+        {
+            ComboBoxItem consoleItem = (ComboBoxItem)ConsoleFilter.SelectedItem;
+            string console = consoleItem.Content.ToString();
+
+
+            List<ButtonCopy> buttons = new List<ButtonCopy>();
+            foreach (Button button in ButtonHolder.Children)
+            {
+                var file = ButtonKeys[button.Name];
+                buttons.Add(new ButtonCopy(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file), Path.GetExtension(file)));
+            }
+
+            List<ButtonCopy> final = new List<ButtonCopy>();
+            final = buttons;
+
+            switch (console)
+            {
+                case "N64":
+                    string[] n64Extensions = { ".z64", ".v64", ".n64" };
+                    foreach (string fileExtension in buttons.Select(x => x.Extension))
+                    {
+                        //final.Remove(buttons.Select(x => x.Extension));
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            foreach (Button button in buttons.Select(x => x.Button))
+            {
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    ButtonHolder.Children.Remove(button);
+                });
+                ButtonHolder.Children.Add(button);
+            }
         }
 
         public void SortButtons()
@@ -76,33 +114,31 @@ namespace Emulators.Pages
             ComboBoxItem sortItem = (ComboBoxItem)SortBy.SelectedItem;
             string sortby = sortItem.Content.ToString();
 
-            IEnumerable<Button> orderedButtons = ButtonHolder.Children.OfType<System.Windows.Controls.Button>();
-            List<ButtonCopy> lastAccessTimes = new List<ButtonCopy>();
 
-            foreach (Button button in orderedButtons)
+            List<ButtonCopy> buttons = new List<ButtonCopy>();
+            foreach (Button button in ButtonHolder.Children)
             {
                 var file = ButtonKeys[button.Name];
-                lastAccessTimes.Add(new ButtonCopy(button.Name, button, File.GetLastWriteTime(file)));
+                buttons.Add(new ButtonCopy(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file)));
             }
 
             switch (sortby)
             {
                 case "Recent":
-                    lastAccessTimes.Sort((x, y) => DateTime.Compare(y.Time, x.Time));
-                    orderedButtons = lastAccessTimes.Select(x => x.Button);
+                    buttons.Sort((x, y) => DateTime.Compare(y.Time, x.Time));
                     break;
                 case "A-Z":
-                    orderedButtons = ButtonHolder.Children.OfType<Button>().OrderBy(button => button.Content);
+                    buttons.Sort((x, y) => String.Compare(x.Content, y.Content));
                     break;
                 case "Z-A":
-                    orderedButtons = ButtonHolder.Children.OfType<Button>().OrderByDescending(button => button.Content);
+                    buttons.Sort((x, y) => String.Compare(y.Content, x.Content));
                     break;
                 default:
-                    orderedButtons = ButtonHolder.Children.OfType<Button>().OrderBy(button => button.Content);
+                    buttons.Sort((x, y) => DateTime.Compare(y.Time, x.Time));
                     break;
             }
 
-            foreach (System.Windows.Controls.Button button in orderedButtons)
+            foreach (Button button in buttons.Select(x => x.Button))
             {
                 Application.Current.Dispatcher.Invoke((Action)delegate
                 {
@@ -127,14 +163,48 @@ namespace Emulators.Pages
     {
         public string Name { get; set; }
         public Button Button { get; set; }
-        //public string PathToFile { get; set; }
+        public string Content { get; set; }
         public DateTime Time { get; set; }
+        public string Extension { get; set; }
 
-        public ButtonCopy(string name, Button button, DateTime time)
+        public ButtonCopy(string name, Button button, string content, DateTime time)
         {
             Name = name;
             Button = button;
+            Content = content;
             Time = time;
+            Extension = string.Empty;
+        }
+
+        public ButtonCopy(string name, Button button, string content, DateTime time, string extension) : this(name, button, content, time)
+        {
+            Extension = extension;
         }
     }
+
+    //public class ButtonCopy
+    //{
+    //    public string Name { get; set; }
+    //    public Button Button { get; set; }
+    //    public string Content { get; set; }
+    //    public DateTime Time { get; set; }
+
+    //    public ButtonCopy(string name, Button button, string content, DateTime time)
+    //    {
+    //        Name = name;
+    //        Button = button;
+    //        Content = content;
+    //        Time = time;
+    //    }
+    //}
+
+    //public class ButtonCopyWithExtension : ButtonCopy
+    //{
+    //    public string Extension { get; set; }
+
+    //    public ButtonCopyWithExtension(string name, Button button, string content, DateTime time, string extension) : base(name, button, content, time)
+    //    {
+    //        Extension = extension;
+    //    }
+    //}
 }
