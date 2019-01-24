@@ -10,11 +10,11 @@
 	</Style>
 
 	<Style TargetType="{x:Type Grid}" x:Key="BackgroundGrid">
-		<Setter Property="Background" Value="#2D2D30"/>
+		<Setter Property="Background" Value="#FF171717"/>
 	</Style>
 
-	<Style TargetType="{x:Type WrapPanel}">
-		<Setter Property="Background" Value="#2D2D30"/>
+	<Style TargetType="{x:Type Grid}" x:Key="TopBarGrid">
+		<Setter Property="Background" Value="#FF303030"/>
 	</Style>
 
 	<Style TargetType="{x:Type Label}">
@@ -34,7 +34,7 @@
 	<Style TargetType="{x:Type Button}">
 		<Setter Property="OverridesDefaultStyle" Value="True"/>
 		<Setter Property="Margin" Value="2"/>
-		<Setter Property="Background" Value="#FF4F4F4F"/>
+		<Setter Property="Background" Value="#FF3C3C3C"/>
 		<Setter Property="Foreground" Value="#FFE8E8E8"/>
 		<Setter Property="Template">
 			<Setter.Value>
@@ -68,7 +68,7 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="Button">
 					<Border BorderThickness="0">
-						<Grid Height="100" Width="100">
+						<Grid Height="100" Width="100" Style="{DynamicResource BackgroundGrid}">
 							<Grid.RowDefinitions>
 								<RowDefinition Height="3*"/>
 								<RowDefinition Height="2*"/>

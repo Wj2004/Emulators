@@ -24,10 +24,14 @@
 				<Label Grid.Row="0" FontSize="36">Games</Label>
 			</Grid>
 
-			<Grid Panel.ZIndex="100" Name="ThemeChanger">
-				<Button HorizontalAlignment="Right" VerticalAlignment="Center"></Button>
+			<Grid Panel.ZIndex="100" Name="Settings">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="369*"/>
+					<ColumnDefinition Width="31*"/>
+				</Grid.ColumnDefinitions>
+				<Button Content="Settings" Grid.Column="1" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="62" Height="61"/>
 			</Grid>
-			
+
 
 			<ScrollViewer Grid.Row="2">
 				<WrapPanel x:Name="ButtonHolder" MouseLeftButtonDown="DoubleClickWrap"/>
@@ -35,34 +39,28 @@
 
 
 
-			<Grid x:Name="TopBar" Grid.Row="1" Background="#FF171717">
+			<Grid x:Name="TopBar" Grid.Row="1" Style="{DynamicResource TopBarGrid}" >
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="207"/>
 					<ColumnDefinition Width="213"/>
 					<ColumnDefinition Width="380"/>
 				</Grid.ColumnDefinitions>
 
-				<WrapPanel Background="{x:Null}" VerticalAlignment="Center" Height="28">
+				<WrapPanel Grid.Column="1" Background="{x:Null}" VerticalAlignment="Center" Height="28">
+					<Label>Sort by</Label>
+					<ComboBox x:Name="SortBy" Width="144" Height="27" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="SortBy_SelectionChanged">
+					</ComboBox>
+				</WrapPanel>
+
+				<WrapPanel Grid.Column="0" Background="{x:Null}" VerticalAlignment="Center" Height="28">
 					<Label>Console</Label>
 					<ComboBox x:Name="ConsoleFilter" Width="144" Height="27" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="Console_SelectionChanged">
-						<ComboBoxItem Content="All"/>
-						<ComboBoxItem Content="Wii"/>
-						<ComboBoxItem Content="N64"/>
 					</ComboBox>
 				</WrapPanel>
 
 				<WrapPanel Grid.Column="2" Background="{x:Null}" VerticalAlignment="Center" Height="28" Visibility="Collapsed">
 					<Label>Search</Label>
-					<TextBox x:Name="Searchbar"  HorizontalAlignment="Left" Height="27" TextWrapping="Wrap" Width="158" VerticalContentAlignment="Center"/>
-				</WrapPanel>
-
-				<WrapPanel Grid.Column="1" Background="{x:Null}" VerticalAlignment="Center" Height="28">
-					<Label>Sort by</Label>
-					<ComboBox x:Name="SortBy" Width="144" Height="27" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="SortBy_SelectionChanged">
-						<ComboBoxItem Content="Recent"/>
-						<ComboBoxItem Content="A-Z"/>
-						<ComboBoxItem Content="Z-A"/>
-					</ComboBox>
+					<TextBox x:Name="Searchbar" HorizontalAlignment="Left" Height="27" TextWrapping="Wrap" Width="158" VerticalContentAlignment="Center"/>
 				</WrapPanel>
 			</Grid>
 		</Grid>

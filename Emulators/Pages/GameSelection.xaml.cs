@@ -21,9 +21,9 @@ namespace Emulators.Pages
             ButtonKeys = new Dictionary<string, string>();
 
             PlaceButtons();
-            SortButtons();
-            //Console();
 
+            PopulateSortComboBoxItems();
+            PopulateConsoleComboBoxItems();
 
             //AllButtons:
             foreach (Button button in ButtonHolder.Children)
@@ -31,6 +31,19 @@ namespace Emulators.Pages
                 var file = ButtonKeys[button.Name];
                 AllButtons.Add(new ButtonCopy(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file), Path.GetExtension(file)));
             }
+        }
+
+        private void PopulateSortComboBoxItems()
+        {
+            SortBy.Items.Add(new ComboBoxItem { Content = "Recent", DataContext = SortEnum.Recent });
+            SortBy.Items.Add(new ComboBoxItem { Content = "A-Z", DataContext = SortEnum.Az });
+            SortBy.Items.Add(new ComboBoxItem { Content = "Z-A", DataContext = SortEnum.Za });
+        }
+        private void PopulateConsoleComboBoxItems()
+        {
+            ConsoleFilter.Items.Add(new ComboBoxItem { Content = "All", DataContext = ConsoleEnum.All });
+            ConsoleFilter.Items.Add(new ComboBoxItem { Content = "Wii", DataContext = ConsoleEnum.Wii });
+            ConsoleFilter.Items.Add(new ComboBoxItem { Content = "N64", DataContext = ConsoleEnum.Nintendo64 });
         }
 
         public void PlaceButtons()
@@ -50,7 +63,7 @@ namespace Emulators.Pages
 
         public void MakeButton(string name, string content, string path)
         {
-            Button newBtn = new System.Windows.Controls.Button();
+            Button newBtn = new Button();
             newBtn.SetResourceReference(StyleProperty, "SelectButton");
             newBtn.Name = name;
             newBtn.Content = content;
@@ -63,10 +76,27 @@ namespace Emulators.Pages
 
         public void ClickButton(object sender, RoutedEventArgs e)
         {
-            var buttonName = (System.Windows.Controls.Button)sender;
+            var buttonName = (Button)sender;
             var file = ButtonKeys[buttonName.Name];
 
-            Process.Start($"{file}");
+            ButtonCopy buttonClickedInListToConsole = AllButtons.First(x => x.Name == buttonName.Name);
+
+            var console = buttonClickedInListToConsole.Console;
+
+            var emulatorsFolder = $"{AppDomain.CurrentDomain.BaseDirectory}Emulators";
+            var n64 = $"{emulatorsFolder}/Project64/Project64.exe";
+
+            switch (console)
+            {
+                case ConsoleEnum.Nintendo64:
+                    Process.Start(n64, $"{file}");
+                    break;
+                case ConsoleEnum.Wii:
+                    break;
+                default:
+                    Process.Start($"{file}");
+                    break;
+            }
         }
 
         #region sorting
@@ -77,47 +107,24 @@ namespace Emulators.Pages
         private void Console_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ConsoleSort();
+            SortButtons();
         }
 
 
         public void ConsoleSort()
         {
             ComboBoxItem consoleItem = (ComboBoxItem)ConsoleFilter.SelectedItem;
-            string console = consoleItem.Content.ToString();
+            var selectedConsole = (ConsoleEnum)consoleItem.DataContext;
 
             List<ButtonCopy> final = new List<ButtonCopy>();
-            final = AllButtons;
 
-
-            //final.First().Console;
-
-
-            switch (console)
+            if (selectedConsole == ConsoleEnum.All)
             {
-                case "All":
-                    final = AllButtons;
-                    break;
-                case "N64":
-                    string[] n64Extensions = { ".z64", ".v64", ".n64" };
-                    final.RemoveAll(x => x.Extension != ".z64");
-                    break;
-                default:
-                    final = AllButtons;
-                    break;
+                final = AllButtons;
             }
-
-            foreach (ButtonCopy i in final)
+            else
             {
-                Debug.WriteLine($"{i.Extension}");
-            }
-
-            foreach (ButtonCopy i in AllButtons)
-            {
-                IEnumerable children = LogicalTreeHelper.GetChildren(ButtonHolder);
-                foreach (Button child in children)
-                {
-                    child.Visibility = Visibility.Collapsed;
-                }
+                final = AllButtons.Where(x => x.Console == selectedConsole).ToList();
             }
 
             foreach (Button button in AllButtons.Select(x => x.Button))
@@ -126,6 +133,9 @@ namespace Emulators.Pages
                 {
                     ButtonHolder.Children.Remove(button);
                 });
+            }
+            foreach (Button button in final.Select(x => x.Button))
+            {
                 ButtonHolder.Children.Add(button);
             }
         }
@@ -133,8 +143,7 @@ namespace Emulators.Pages
         public void SortButtons()
         {
             ComboBoxItem sortItem = (ComboBoxItem)SortBy.SelectedItem;
-            string sortby = sortItem.Content.ToString();
-
+            var selectedSort = (SortEnum)sortItem.DataContext;
 
             List<ButtonCopy> buttons = new List<ButtonCopy>();
             foreach (Button button in ButtonHolder.Children)
@@ -143,19 +152,16 @@ namespace Emulators.Pages
                 buttons.Add(new ButtonCopy(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file)));
             }
 
-            switch (sortby)
+            switch (selectedSort)
             {
-                case "Recent":
+                case SortEnum.Recent:
                     buttons.Sort((x, y) => DateTime.Compare(y.Time, x.Time));
                     break;
-                case "A-Z":
+                case SortEnum.Az:
                     buttons.Sort((x, y) => String.Compare(x.Content, y.Content));
                     break;
-                case "Z-A":
+                case SortEnum.Za:
                     buttons.Sort((x, y) => String.Compare(y.Content, x.Content));
-                    break;
-                default:
-                    buttons.Sort((x, y) => DateTime.Compare(y.Time, x.Time));
                     break;
             }
 
@@ -230,8 +236,16 @@ namespace Emulators.Pages
     public enum ConsoleEnum
     {
         Unknown,
+        All,
         Wii,
         Nintendo64
+    }
+
+    public enum SortEnum
+    {
+        Recent,
+        Az,
+        Za
     }
     //public class ButtonCopy
     //{
