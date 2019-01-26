@@ -15,13 +15,5 @@ namespace Emulators
             InitializeComponent();
             pageView.Navigate(new GameSelection());
         }
-
-        void HandleNavigating(Object sender, NavigatingCancelEventArgs e)
-        {
-            if (e.NavigationMode == NavigationMode.Forward || e.NavigationMode == NavigationMode.Back)
-            {
-                e.Cancel = true;
-            }
-        }
     }
 }

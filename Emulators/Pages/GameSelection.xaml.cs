@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -44,6 +43,8 @@ namespace Emulators.Pages
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "All", DataContext = ConsoleEnum.All });
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "Wii", DataContext = ConsoleEnum.Wii });
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "N64", DataContext = ConsoleEnum.Nintendo64 });
+            ConsoleFilter.Items.Add(new ComboBoxItem { Content = "SNES", DataContext = ConsoleEnum.SuperNES });
+            ConsoleFilter.Items.Add(new ComboBoxItem { Content = "NES", DataContext = ConsoleEnum.NES });
         }
 
         public void PlaceButtons()
@@ -77,7 +78,7 @@ namespace Emulators.Pages
         public void ClickButton(object sender, RoutedEventArgs e)
         {
             var buttonName = (Button)sender;
-            var file = ButtonKeys[buttonName.Name];
+            var file = ButtonKeys[buttonName.Name].ToString().AsFileParameter();
 
             ButtonCopy buttonClickedInListToConsole = AllButtons.First(x => x.Name == buttonName.Name);
 
@@ -85,6 +86,9 @@ namespace Emulators.Pages
 
             var emulatorsFolder = $"{AppDomain.CurrentDomain.BaseDirectory}Emulators";
             var n64 = $"{emulatorsFolder}/Project64/Project64.exe";
+            var wii = $"{emulatorsFolder}/Dolphin/Dolphin.exe";
+            var snes = $"{emulatorsFolder}/Snes9X/snes9x.exe";
+            var nes = $"{emulatorsFolder}/Nestopia/nestopia.exe";
 
             switch (console)
             {
@@ -92,6 +96,13 @@ namespace Emulators.Pages
                     Process.Start(n64, $"{file}");
                     break;
                 case ConsoleEnum.Wii:
+                    Process.Start(wii, $"{file}");
+                    break;
+                case ConsoleEnum.SuperNES:
+                    Process.Start(snes, $"{file}");
+                    break;
+                case ConsoleEnum.NES:
+                    Process.Start(nes, $"{file}");
                     break;
                 default:
                     Process.Start($"{file}");
@@ -184,6 +195,23 @@ namespace Emulators.Pages
                 Process.Start(GameFolder);
             }
         }
+
+        SettingsWindow settings;
+        public void SettingsClick(object sender, RoutedEventArgs e)
+        {
+            if (settings == null)
+            {
+                settings = new SettingsWindow();
+            }
+            settings.Closed += delegate { settings = null; };
+
+            if (settings.WindowState == WindowState.Minimized)
+            {
+                settings.WindowState = WindowState.Normal;
+            }
+            settings.Show();
+            settings.Activate();
+        }
     }
 
     public class ButtonCopy
@@ -227,6 +255,11 @@ namespace Emulators.Pages
                 case ".v64":
                 case ".n64":
                     return ConsoleEnum.Nintendo64;
+                case ".smc":
+                case ".sfc":
+                    return ConsoleEnum.SuperNES;
+                case ".nes":
+                    return ConsoleEnum.NES;
                 default:
                     return ConsoleEnum.Unknown;
             }
@@ -238,7 +271,9 @@ namespace Emulators.Pages
         Unknown,
         All,
         Wii,
-        Nintendo64
+        Nintendo64,
+        SuperNES,
+        NES
     }
 
     public enum SortEnum

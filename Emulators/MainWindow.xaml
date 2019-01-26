@@ -5,7 +5,7 @@
 		Icon="Pics/Logo4.ico"
         Title="Emulators" Height="450" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center" WindowStartupLocation="CenterScreen" MinHeight="500" MinWidth="850">
 	<DockPanel>
-		<Frame Navigating="HandleNavigating" x:Name="pageView" NavigationUIVisibility="Hidden"/>
+		<Frame x:Name="pageView" NavigationUIVisibility="Hidden"/>
 	</DockPanel>
 </Window>
 

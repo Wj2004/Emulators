@@ -24,17 +24,17 @@
 				<Label Grid.Row="0" FontSize="36">Games</Label>
 			</Grid>
 
-			<Grid Panel.ZIndex="100" Name="Settings">
+			<Grid Panel.ZIndex="100" Name="Settings" HorizontalAlignment="Right">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="369*"/>
-					<ColumnDefinition Width="31*"/>
+					<ColumnDefinition Width="738"/>
+					<ColumnDefinition Width="62"/>
 				</Grid.ColumnDefinitions>
-				<Button Content="Settings" Grid.Column="1" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="62" Height="61"/>
+				<Button Content="Settings" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="62" Height="61" Margin="0" Click="SettingsClick"/>
 			</Grid>
 
 
 			<ScrollViewer Grid.Row="2">
-				<WrapPanel x:Name="ButtonHolder" MouseLeftButtonDown="DoubleClickWrap"/>
+				<WrapPanel x:Name="ButtonHolder" MouseLeftButtonDown="DoubleClickWrap" Background="#00000000"/>
 			</ScrollViewer>
 
 
