@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Emulators.Pages
+namespace Emulators.Pages.Settings
 {
     /// <summary>
     /// Interaction logic for SettingsWindow.xaml

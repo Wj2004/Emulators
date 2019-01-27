@@ -55,7 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Pages\EmulatorsSettings.xaml.cs">
+    <Compile Include="Pages\Settings\EmulatorsSettings.xaml.cs">
       <DependentUpon>EmulatorsSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\GameSelection.xaml.cs">
@@ -64,7 +64,7 @@
     <Compile Include="Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Page Include="Pages\EmulatorsSettings.xaml">
+    <Page Include="Pages\Settings\EmulatorsSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -96,7 +96,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\SettingsWindow.xaml">
+    <Page Include="Pages\Settings\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -121,7 +121,7 @@
     <Compile Include="Pages\PlayGame.xaml.cs">
       <DependentUpon>PlayGame.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SettingsWindow.xaml.cs">
+    <Compile Include="Pages\Settings\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">

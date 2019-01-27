@@ -45,6 +45,7 @@ namespace Emulators.Pages
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "N64", DataContext = ConsoleEnum.Nintendo64 });
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "SNES", DataContext = ConsoleEnum.SuperNES });
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "NES", DataContext = ConsoleEnum.NES });
+            ConsoleFilter.Items.Add(new ComboBoxItem { Content = "GameCube", DataContext = ConsoleEnum.GameCube });
         }
 
         public void PlaceButtons()
@@ -87,6 +88,7 @@ namespace Emulators.Pages
             var emulatorsFolder = $"{AppDomain.CurrentDomain.BaseDirectory}Emulators";
             var n64 = $"{emulatorsFolder}/Project64/Project64.exe";
             var wii = $"{emulatorsFolder}/Dolphin/Dolphin.exe";
+            var gamecube = $"{emulatorsFolder}/Dolphin/Dolphin.exe";
             var snes = $"{emulatorsFolder}/Snes9X/snes9x.exe";
             var nes = $"{emulatorsFolder}/Nestopia/nestopia.exe";
 
@@ -97,6 +99,9 @@ namespace Emulators.Pages
                     break;
                 case ConsoleEnum.Wii:
                     Process.Start(wii, $"{file}");
+                    break;
+                case ConsoleEnum.GameCube:
+                    Process.Start(gamecube, $"{file}");
                     break;
                 case ConsoleEnum.SuperNES:
                     Process.Start(snes, $"{file}");
@@ -196,12 +201,12 @@ namespace Emulators.Pages
             }
         }
 
-        SettingsWindow settings;
+        Settings.SettingsWindow settings;
         public void SettingsClick(object sender, RoutedEventArgs e)
         {
             if (settings == null)
             {
-                settings = new SettingsWindow();
+                settings = new Settings.SettingsWindow();
             }
             settings.Closed += delegate { settings = null; };
 
@@ -242,22 +247,26 @@ namespace Emulators.Pages
         {
             switch (extension)
             {
-                //Wii
+                //Wii Dolphin
                 case ".wbfs":
                 case ".cISO":
                 case ".wdf":
                 case ".wdf1":
                 case ".wdf2":
-                case ".gcm":
                     return ConsoleEnum.Wii;
+                //Gamecube Dolphin
+                case ".gcm":
+                    return ConsoleEnum.GameCube;
                 //Nintendo 64
                 case ".z64":
                 case ".v64":
                 case ".n64":
                     return ConsoleEnum.Nintendo64;
+                //Super Nintendo Entertainment System
                 case ".smc":
                 case ".sfc":
                     return ConsoleEnum.SuperNES;
+                //Nintendo Entertainment System
                 case ".nes":
                     return ConsoleEnum.NES;
                 default:
@@ -273,7 +282,8 @@ namespace Emulators.Pages
         Wii,
         Nintendo64,
         SuperNES,
-        NES
+        NES,
+        GameCube
     }
 
     public enum SortEnum
