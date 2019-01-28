@@ -12,7 +12,7 @@ namespace Emulators.Pages
     public partial class GameSelection : Page
     {
         private static Dictionary<string, string> ButtonKeys;
-        public List<ButtonData> AllButtons = new List<ButtonData>();
+        public List<ButtonCopy> AllButtons = new List<ButtonCopy>();
 
         public GameSelection()
         {
@@ -28,7 +28,7 @@ namespace Emulators.Pages
             foreach (Button button in ButtonHolder.Children)
             {
                 var file = ButtonKeys[button.Name];
-                AllButtons.Add(new ButtonData(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file), Path.GetExtension(file)));
+                AllButtons.Add(new ButtonCopy(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file), Path.GetExtension(file)));
             }
         }
 
@@ -46,7 +46,6 @@ namespace Emulators.Pages
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "SNES", DataContext = ConsoleEnum.SuperNES });
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "NES", DataContext = ConsoleEnum.NES });
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "GameCube", DataContext = ConsoleEnum.GameCube });
-            ConsoleFilter.Items.Add(new ComboBoxItem { Content = "Gameboy Advance", DataContext = ConsoleEnum.GameBoy });
         }
 
         public void PlaceButtons()
@@ -60,25 +59,21 @@ namespace Emulators.Pages
             var folder = Directory.GetFiles($"{baseFolder}", "*.*", SearchOption.AllDirectories);
             foreach (string file in folder)
             {
-                MakeButton($"{Path.GetFullPath(file)}");
+                MakeButton($"{Path.GetFileNameWithoutExtension(file).RemoveInvalidChars()}", $"{Path.GetFileNameWithoutExtension(file)}", $"{Path.GetFullPath(file)}");
             }
         }
 
-        public void MakeButton(string path)
+        public void MakeButton(string name, string content, string path)
         {
             Button newBtn = new Button();
             newBtn.SetResourceReference(StyleProperty, "SelectButton");
-            newBtn.Name = Path.GetFileName(path).RemoveInvalidChars();
-            newBtn.Content = Path.GetFileNameWithoutExtension(path);
+            newBtn.Name = name;
+            newBtn.Content = content;
             newBtn.Click += ClickButton;
 
-            newBtn.ToolTip = Path.GetFileName(path);
+            ButtonHolder.Children.Add(newBtn);
 
-            if (!ButtonHolder.Children.Contains(newBtn) && !Path.GetExtension(path).Equals(".sav"))
-            {
-                ButtonHolder.Children.Add(newBtn);
-                ButtonKeys.Add(Path.GetFileName(path).RemoveInvalidChars(), path);
-            }
+            ButtonKeys.Add(name, path);
         }
 
         public void ClickButton(object sender, RoutedEventArgs e)
@@ -86,7 +81,7 @@ namespace Emulators.Pages
             var buttonName = (Button)sender;
             var file = ButtonKeys[buttonName.Name].ToString().AsFileParameter();
 
-            ButtonData buttonClickedInListToConsole = AllButtons.First(x => x.Name == buttonName.Name);
+            ButtonCopy buttonClickedInListToConsole = AllButtons.First(x => x.Name == buttonName.Name);
 
             var console = buttonClickedInListToConsole.Console;
 
@@ -96,7 +91,6 @@ namespace Emulators.Pages
             var gamecube = $"{emulatorsFolder}/Dolphin/Dolphin.exe";
             var snes = $"{emulatorsFolder}/Snes9X/snes9x.exe";
             var nes = $"{emulatorsFolder}/Nestopia/nestopia.exe";
-            var gameboy = $"{emulatorsFolder}/VisualBoyAdvance/VisualBoyAdvance.exe";
 
             switch (console)
             {
@@ -114,9 +108,6 @@ namespace Emulators.Pages
                     break;
                 case ConsoleEnum.NES:
                     Process.Start(nes, $"{file}");
-                    break;
-                case ConsoleEnum.GameBoy:
-                    Process.Start(gameboy, $"{file}");
                     break;
                 default:
                     Process.Start($"{file}");
@@ -141,7 +132,7 @@ namespace Emulators.Pages
             ComboBoxItem consoleItem = (ComboBoxItem)ConsoleFilter.SelectedItem;
             var selectedConsole = (ConsoleEnum)consoleItem.DataContext;
 
-            List<ButtonData> final = new List<ButtonData>();
+            List<ButtonCopy> final = new List<ButtonCopy>();
 
             if (selectedConsole == ConsoleEnum.All)
             {
@@ -170,11 +161,11 @@ namespace Emulators.Pages
             ComboBoxItem sortItem = (ComboBoxItem)SortBy.SelectedItem;
             var selectedSort = (SortEnum)sortItem.DataContext;
 
-            List<ButtonData> buttons = new List<ButtonData>();
+            List<ButtonCopy> buttons = new List<ButtonCopy>();
             foreach (Button button in ButtonHolder.Children)
             {
                 var file = ButtonKeys[button.Name];
-                buttons.Add(new ButtonData(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file)));
+                buttons.Add(new ButtonCopy(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file)));
             }
 
             switch (selectedSort)
@@ -228,7 +219,7 @@ namespace Emulators.Pages
         }
     }
 
-    public class ButtonData
+    public class ButtonCopy
     {
         public string Name { get; set; }
         public Button Button { get; set; }
@@ -237,7 +228,7 @@ namespace Emulators.Pages
         public string Extension { get; set; }
         public ConsoleEnum Console { get; set; }
 
-        public ButtonData(string name, Button button, string content, DateTime time)
+        public ButtonCopy(string name, Button button, string content, DateTime time)
         {
             Name = name;
             Button = button;
@@ -246,7 +237,7 @@ namespace Emulators.Pages
             Extension = string.Empty;
         }
 
-        public ButtonData(string name, Button button, string content, DateTime time, string extension) : this(name, button, content, time)
+        public ButtonCopy(string name, Button button, string content, DateTime time, string extension) : this(name, button, content, time)
         {
             Extension = extension;
             Console = GetConsoleFromExtension(extension);
@@ -278,10 +269,6 @@ namespace Emulators.Pages
                 //Nintendo Entertainment System
                 case ".nes":
                     return ConsoleEnum.NES;
-                //GameBoy
-                case ".gb":
-                case ".gba":
-                    return ConsoleEnum.GameBoy;
                 default:
                     return ConsoleEnum.Unknown;
             }
@@ -296,8 +283,7 @@ namespace Emulators.Pages
         Nintendo64,
         SuperNES,
         NES,
-        GameCube,
-        GameBoy
+        GameCube
     }
 
     public enum SortEnum
@@ -306,14 +292,14 @@ namespace Emulators.Pages
         Az,
         Za
     }
-    //public class ButtonData
+    //public class ButtonCopy
     //{
     //    public string Name { get; set; }
     //    public Button Button { get; set; }
     //    public string Content { get; set; }
     //    public DateTime Time { get; set; }
 
-    //    public ButtonData(string name, Button button, string content, DateTime time)
+    //    public ButtonCopy(string name, Button button, string content, DateTime time)
     //    {
     //        Name = name;
     //        Button = button;
@@ -322,11 +308,11 @@ namespace Emulators.Pages
     //    }
     //}
 
-    //public class ButtonDataWithExtension : ButtonData
+    //public class ButtonCopyWithExtension : ButtonCopy
     //{
     //    public string Extension { get; set; }
 
-    //    public ButtonDataWithExtension(string name, Button button, string content, DateTime time, string extension) : base(name, button, content, time)
+    //    public ButtonCopyWithExtension(string name, Button button, string content, DateTime time, string extension) : base(name, button, content, time)
     //    {
     //        Extension = extension;
     //    }
