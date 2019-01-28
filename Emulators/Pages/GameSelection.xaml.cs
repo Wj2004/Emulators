@@ -12,7 +12,7 @@ namespace Emulators.Pages
     public partial class GameSelection : Page
     {
         private static Dictionary<string, string> ButtonKeys;
-        public List<ButtonCopy> AllButtons = new List<ButtonCopy>();
+        public List<ButtonData> AllButtons = new List<ButtonData>();
 
         public GameSelection()
         {
@@ -28,7 +28,7 @@ namespace Emulators.Pages
             foreach (Button button in ButtonHolder.Children)
             {
                 var file = ButtonKeys[button.Name];
-                AllButtons.Add(new ButtonCopy(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file), Path.GetExtension(file)));
+                AllButtons.Add(new ButtonData(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file), Path.GetExtension(file)));
             }
         }
 
@@ -87,7 +87,7 @@ namespace Emulators.Pages
             var buttonName = (Button)sender;
             var file = ButtonKeys[buttonName.Name].ToString().AsFileParameter();
 
-            ButtonCopy buttonClickedInListToConsole = AllButtons.First(x => x.Name == buttonName.Name);
+            ButtonData buttonClickedInListToConsole = AllButtons.First(x => x.Name == buttonName.Name);
 
             var console = buttonClickedInListToConsole.Console;
 
@@ -142,7 +142,7 @@ namespace Emulators.Pages
             ComboBoxItem consoleItem = (ComboBoxItem)ConsoleFilter.SelectedItem;
             var selectedConsole = (ConsoleEnum)consoleItem.DataContext;
 
-            List<ButtonCopy> final = new List<ButtonCopy>();
+            List<ButtonData> final = new List<ButtonData>();
 
             if (selectedConsole == ConsoleEnum.All)
             {
@@ -171,11 +171,11 @@ namespace Emulators.Pages
             ComboBoxItem sortItem = (ComboBoxItem)SortBy.SelectedItem;
             var selectedSort = (SortEnum)sortItem.DataContext;
 
-            List<ButtonCopy> buttons = new List<ButtonCopy>();
+            List<ButtonData> buttons = new List<ButtonData>();
             foreach (Button button in ButtonHolder.Children)
             {
                 var file = ButtonKeys[button.Name];
-                buttons.Add(new ButtonCopy(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file)));
+                buttons.Add(new ButtonData(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file)));
             }
 
             switch (selectedSort)
@@ -229,7 +229,7 @@ namespace Emulators.Pages
         }
     }
 
-    public class ButtonCopy
+    public class ButtonData
     {
         public string Name { get; set; }
         public Button Button { get; set; }
@@ -238,7 +238,7 @@ namespace Emulators.Pages
         public string Extension { get; set; }
         public ConsoleEnum Console { get; set; }
 
-        public ButtonCopy(string name, Button button, string content, DateTime time)
+        public ButtonData(string name, Button button, string content, DateTime time)
         {
             Name = name;
             Button = button;
@@ -247,7 +247,7 @@ namespace Emulators.Pages
             Extension = string.Empty;
         }
 
-        public ButtonCopy(string name, Button button, string content, DateTime time, string extension) : this(name, button, content, time)
+        public ButtonData(string name, Button button, string content, DateTime time, string extension) : this(name, button, content, time)
         {
             Extension = extension;
             Console = GetConsoleFromExtension(extension);
@@ -306,7 +306,7 @@ namespace Emulators.Pages
         Az,
         Za
     }
-    //public class ButtonCopy
+    //public class ButtonData
     //{
     //    public string Name { get; set; }
     //    public Button Button { get; set; }
@@ -322,11 +322,11 @@ namespace Emulators.Pages
     //    }
     //}
 
-    //public class ButtonCopyWithExtension : ButtonCopy
+    //public class ButtonDataWithExtension : ButtonData
     //{
     //    public string Extension { get; set; }
 
-    //    public ButtonCopyWithExtension(string name, Button button, string content, DateTime time, string extension) : base(name, button, content, time)
+    //    public ButtonDataWithExtension(string name, Button button, string content, DateTime time, string extension) : base(name, button, content, time)
     //    {
     //        Extension = extension;
     //    }

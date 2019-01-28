@@ -46,15 +46,15 @@
 					<ColumnDefinition Width="380"/>
 				</Grid.ColumnDefinitions>
 
-				<WrapPanel Grid.Column="1" Background="{x:Null}" VerticalAlignment="Center" Height="28">
-					<Label>Sort by</Label>
-					<ComboBox x:Name="SortBy" Width="144" Height="27" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="SortBy_SelectionChanged">
-					</ComboBox>
-				</WrapPanel>
-
 				<WrapPanel Grid.Column="0" Background="{x:Null}" VerticalAlignment="Center" Height="28">
 					<Label>Console</Label>
 					<ComboBox x:Name="ConsoleFilter" Width="144" Height="27" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="Console_SelectionChanged">
+					</ComboBox>
+				</WrapPanel>
+
+				<WrapPanel Grid.Column="1" Background="{x:Null}" VerticalAlignment="Center" Height="28">
+					<Label>Sort by</Label>
+					<ComboBox x:Name="SortBy" Width="144" Height="27" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="SortBy_SelectionChanged">
 					</ComboBox>
 				</WrapPanel>
 
