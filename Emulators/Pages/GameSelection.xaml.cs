@@ -46,6 +46,7 @@ namespace Emulators.Pages
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "SNES", DataContext = ConsoleEnum.SuperNES });
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "NES", DataContext = ConsoleEnum.NES });
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "GameCube", DataContext = ConsoleEnum.GameCube });
+            ConsoleFilter.Items.Add(new ComboBoxItem { Content = "GameBoy", DataContext = ConsoleEnum.GameBoy });
         }
 
         public void PlaceButtons()
@@ -59,21 +60,26 @@ namespace Emulators.Pages
             var folder = Directory.GetFiles($"{baseFolder}", "*.*", SearchOption.AllDirectories);
             foreach (string file in folder)
             {
-                MakeButton($"{Path.GetFileNameWithoutExtension(file).RemoveInvalidChars()}", $"{Path.GetFileNameWithoutExtension(file)}", $"{Path.GetFullPath(file)}");
+                MakeButton($"{Path.GetFullPath(file)}");
             }
         }
 
-        public void MakeButton(string name, string content, string path)
+        public void MakeButton(string path)
         {
             Button newBtn = new Button();
             newBtn.SetResourceReference(StyleProperty, "SelectButton");
-            newBtn.Name = name;
-            newBtn.Content = content;
+            newBtn.Name = Path.GetFileNameWithoutExtension(path).RemoveInvalidChars();
+            newBtn.Content = Path.GetFileNameWithoutExtension(path);
             newBtn.Click += ClickButton;
 
-            ButtonHolder.Children.Add(newBtn);
+            newBtn.ToolTip = Path.GetFileName(path);
 
-            ButtonKeys.Add(name, path);
+            if (!ButtonHolder.Children.Contains(newBtn) && !Path.GetExtension(path).Equals(".sav"))
+            {
+                ButtonHolder.Children.Add(newBtn);
+                ButtonKeys.Add(Path.GetFileNameWithoutExtension(path).RemoveInvalidChars(), path);
+            }
+
         }
 
         public void ClickButton(object sender, RoutedEventArgs e)
@@ -91,6 +97,7 @@ namespace Emulators.Pages
             var gamecube = $"{emulatorsFolder}/Dolphin/Dolphin.exe";
             var snes = $"{emulatorsFolder}/Snes9X/snes9x.exe";
             var nes = $"{emulatorsFolder}/Nestopia/nestopia.exe";
+            var gameboy = $"{emulatorsFolder}/VisualBoyAdvance/VisualBoyAdvance.exe";
 
             switch (console)
             {
@@ -108,6 +115,9 @@ namespace Emulators.Pages
                     break;
                 case ConsoleEnum.NES:
                     Process.Start(nes, $"{file}");
+                    break;
+                case ConsoleEnum.GameBoy:
+                    Process.Start(gameboy, $"{file}");
                     break;
                 default:
                     Process.Start($"{file}");
@@ -269,6 +279,9 @@ namespace Emulators.Pages
                 //Nintendo Entertainment System
                 case ".nes":
                     return ConsoleEnum.NES;
+                case ".gb":
+                case ".gba":
+                    return ConsoleEnum.GameBoy;
                 default:
                     return ConsoleEnum.Unknown;
             }
@@ -283,7 +296,8 @@ namespace Emulators.Pages
         Nintendo64,
         SuperNES,
         NES,
-        GameCube
+        GameCube,
+        GameBoy
     }
 
     public enum SortEnum

@@ -10,7 +10,7 @@ namespace Emulators
 
         public static string RemoveInvalidChars(this string invalidString)
         {
-            return Regex.Replace(invalidString, "[^a-zA-Z0-9_.]+", string.Empty, RegexOptions.Compiled);
+            return Regex.Replace(invalidString, "[^a-zA-Z0-9_]+", string.Empty, RegexOptions.Compiled);
         }
     }
 }

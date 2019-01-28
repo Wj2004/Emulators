@@ -29,7 +29,7 @@
 					<ColumnDefinition Width="738"/>
 					<ColumnDefinition Width="62"/>
 				</Grid.ColumnDefinitions>
-				<Button Content="Settings" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="62" Height="61" Margin="0" Click="SettingsClick"/>
+				<Button Visibility="Collapsed" Content="Settings" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="62" Height="61" Margin="0" Click="SettingsClick"/>
 			</Grid>
 
 
