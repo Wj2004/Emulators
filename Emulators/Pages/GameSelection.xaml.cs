@@ -20,16 +20,10 @@ namespace Emulators.Pages
             ButtonKeys = new Dictionary<string, string>();
 
             PlaceButtons();
+            UpdateButtonsLive();
 
             PopulateSortComboBoxItems();
             PopulateConsoleComboBoxItems();
-
-            //AllButtons:
-            foreach (Button button in ButtonHolder.Children)
-            {
-                var file = ButtonKeys[button.Name];
-                AllButtons.Add(new ButtonData(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file), Path.GetExtension(file)));
-            }
         }
 
         private void PopulateSortComboBoxItems()
@@ -62,25 +56,105 @@ namespace Emulators.Pages
             {
                 MakeButton($"{Path.GetFullPath(file)}");
             }
+
+            //AllButtons:
+
+            Application.Current.Dispatcher.Invoke((Action)delegate
+            {
+                foreach (Button button in ButtonHolder.Children)
+                {
+                    var file = ButtonKeys[button.Name];
+                    AllButtons.Add(new ButtonData(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file), Path.GetExtension(file)));
+                }
+            });
+            
         }
+
+        
 
         public void MakeButton(string path)
         {
-            Button newBtn = new Button();
-            newBtn.SetResourceReference(StyleProperty, "SelectButton");
-            newBtn.Name = Path.GetFileNameWithoutExtension(path).RemoveInvalidChars();
-            newBtn.Content = Path.GetFileNameWithoutExtension(path);
-            newBtn.Click += ClickButton;
-
-            newBtn.ToolTip = Path.GetFileName(path);
-
-            if (!ButtonHolder.Children.Contains(newBtn) && !Path.GetExtension(path).Equals(".sav"))
+            Application.Current.Dispatcher.Invoke((Action)delegate
             {
-                ButtonHolder.Children.Add(newBtn);
-                ButtonKeys.Add(Path.GetFileNameWithoutExtension(path).RemoveInvalidChars(), path);
-            }
+                Button newBtn = new Button();
+                newBtn.SetResourceReference(StyleProperty, "SelectButton");
+                newBtn.Name = Path.GetFileNameWithoutExtension(path).RemoveInvalidChars();
+                newBtn.Content = Path.GetFileNameWithoutExtension(path);
+                newBtn.Click += ClickButton;
+
+                newBtn.ToolTip = Path.GetFileName(path);
+
+                if (!ButtonHolder.Children.Contains(newBtn) && !Path.GetExtension(path).Equals(".sav"))
+                {
+                    ButtonHolder.Children.Add(newBtn);
+                    ButtonKeys.Add(Path.GetFileNameWithoutExtension(path).RemoveInvalidChars(), path);
+                }
+            });
+        }
+
+        #region LiveUpdateButtons
+        public void UpdateButtonsLive()
+        {
+            string[] args = System.Environment.GetCommandLineArgs();
+            var folderName = $"{AppDomain.CurrentDomain.BaseDirectory}Games";
+
+            // Create a new FileSystemWatcher and set its properties.
+            FileSystemWatcher watcher = new FileSystemWatcher
+            {
+                Path = folderName,
+
+                /* Watch for changes in LastAccess and LastWrite times, and
+                   the renaming of files or directories. */
+                NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
+               | NotifyFilters.FileName | NotifyFilters.DirectoryName
+            };
+
+            // Add event handlers.
+            watcher.Changed += new FileSystemEventHandler(OnChanged);
+            watcher.Created += new FileSystemEventHandler(OnChanged);
+            watcher.Deleted += new FileSystemEventHandler(OnChanged);
+            watcher.Renamed += new RenamedEventHandler(OnRenamed);
+
+            // Begin watching.
+            watcher.EnableRaisingEvents = true;
 
         }
+
+        //When button is changed, created, or deleted
+        private void OnChanged(object source, FileSystemEventArgs e)
+        {
+            Console.WriteLine("File: " + e.Name + " " + e.ChangeType);
+
+            var buttonName = "Button_" + Path.GetFileNameWithoutExtension(e.FullPath).RemoveInvalidChars();
+
+            Application.Current.Dispatcher.Invoke((Action)delegate
+            {
+                ButtonHolder.Children.Clear();
+            });
+
+            ButtonKeys.Clear();
+            AllButtons.Clear();
+            PlaceButtons();
+            ConsoleSort();
+            SortButtons();
+        }
+
+        private void OnRenamed(object source, RenamedEventArgs e)
+        {
+            Console.WriteLine("File: {0} renamed to {1}", e.OldName, e.Name);
+
+            Application.Current.Dispatcher.Invoke((Action)delegate
+            {
+                ButtonHolder.Children.Clear();
+            });
+
+            ButtonKeys.Clear();
+            AllButtons.Clear();
+            PlaceButtons();
+            ConsoleSort();
+            SortButtons();
+        }
+        #endregion
 
         public void ClickButton(object sender, RoutedEventArgs e)
         {
@@ -139,66 +213,72 @@ namespace Emulators.Pages
 
         public void ConsoleSort()
         {
-            ComboBoxItem consoleItem = (ComboBoxItem)ConsoleFilter.SelectedItem;
-            var selectedConsole = (ConsoleEnum)consoleItem.DataContext;
-
-            List<ButtonData> final = new List<ButtonData>();
-
-            if (selectedConsole == ConsoleEnum.All)
+            Application.Current.Dispatcher.Invoke((Action)delegate
             {
-                final = AllButtons;
-            }
-            else
-            {
-                final = AllButtons.Where(x => x.Console == selectedConsole).ToList();
-            }
+                ComboBoxItem consoleItem = (ComboBoxItem)ConsoleFilter.SelectedItem;
+                var selectedConsole = (ConsoleEnum)consoleItem.DataContext;
 
-            foreach (Button button in AllButtons.Select(x => x.Button))
-            {
-                Application.Current.Dispatcher.Invoke((Action)delegate
+                List<ButtonData> final = new List<ButtonData>();
+
+                if (selectedConsole == ConsoleEnum.All)
                 {
-                    ButtonHolder.Children.Remove(button);
-                });
-            }
-            foreach (Button button in final.Select(x => x.Button))
-            {
-                ButtonHolder.Children.Add(button);
-            }
+                    final = AllButtons;
+                }
+                else
+                {
+                    final = AllButtons.Where(x => x.Console == selectedConsole).ToList();
+                }
+
+                foreach (Button button in AllButtons.Select(x => x.Button))
+                {
+                    Application.Current.Dispatcher.Invoke((Action)delegate
+                    {
+                        ButtonHolder.Children.Remove(button);
+                    });
+                }
+                foreach (Button button in final.Select(x => x.Button))
+                {
+                    ButtonHolder.Children.Add(button);
+                }
+            });
         }
 
         public void SortButtons()
         {
-            ComboBoxItem sortItem = (ComboBoxItem)SortBy.SelectedItem;
-            var selectedSort = (SortEnum)sortItem.DataContext;
-
-            List<ButtonData> buttons = new List<ButtonData>();
-            foreach (Button button in ButtonHolder.Children)
+            Application.Current.Dispatcher.Invoke((Action)delegate
             {
-                var file = ButtonKeys[button.Name];
-                buttons.Add(new ButtonData(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file)));
-            }
+                ComboBoxItem sortItem = (ComboBoxItem)SortBy.SelectedItem;
+                var selectedSort = (SortEnum)sortItem.DataContext;
 
-            switch (selectedSort)
-            {
-                case SortEnum.Recent:
-                    buttons.Sort((x, y) => DateTime.Compare(y.Time, x.Time));
-                    break;
-                case SortEnum.Az:
-                    buttons.Sort((x, y) => String.Compare(x.Content, y.Content));
-                    break;
-                case SortEnum.Za:
-                    buttons.Sort((x, y) => String.Compare(y.Content, x.Content));
-                    break;
-            }
-
-            foreach (Button button in buttons.Select(x => x.Button))
-            {
-                Application.Current.Dispatcher.Invoke((Action)delegate
+                List<ButtonData> buttons = new List<ButtonData>();
+                foreach (Button button in ButtonHolder.Children)
                 {
-                    ButtonHolder.Children.Remove(button);
-                });
-                ButtonHolder.Children.Add(button);
-            }
+                    var file = ButtonKeys[button.Name];
+                    buttons.Add(new ButtonData(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file)));
+                }
+
+                switch (selectedSort)
+                {
+                    case SortEnum.Recent:
+                        buttons.Sort((x, y) => DateTime.Compare(y.Time, x.Time));
+                        break;
+                    case SortEnum.Az:
+                        buttons.Sort((x, y) => String.Compare(x.Content, y.Content));
+                        break;
+                    case SortEnum.Za:
+                        buttons.Sort((x, y) => String.Compare(y.Content, x.Content));
+                        break;
+                }
+
+                foreach (Button button in buttons.Select(x => x.Button))
+                {
+                    Application.Current.Dispatcher.Invoke((Action)delegate
+                    {
+                        ButtonHolder.Children.Remove(button);
+                    });
+                    ButtonHolder.Children.Add(button);
+                }
+            });
         }
         #endregion
 
