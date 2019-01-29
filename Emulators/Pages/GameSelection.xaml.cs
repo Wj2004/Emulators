@@ -11,13 +11,11 @@ namespace Emulators.Pages
 {
     public partial class GameSelection : Page
     {
-        private static Dictionary<string, string> ButtonKeys;
         public List<ButtonData> AllButtons = new List<ButtonData>();
 
         public GameSelection()
         {
             InitializeComponent();
-            ButtonKeys = new Dictionary<string, string>();
 
             PlaceButtons();
             UpdateButtonsLive();
@@ -73,14 +71,6 @@ namespace Emulators.Pages
             }
 
             //AllButtons:
-            Application.Current.Dispatcher.Invoke((Action)delegate
-            {
-                foreach (Button button in ButtonHolder.Children)
-                {
-                    var file = ButtonKeys[button.Name];
-                    AllButtons.Add(new ButtonData(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file), Path.GetExtension(file)));
-                }
-            });
             
         }
 
@@ -95,21 +85,38 @@ namespace Emulators.Pages
                 newBtn.Name = Path.GetFileNameWithoutExtension(path).RemoveInvalidChars();
                 newBtn.Content = Path.GetFileNameWithoutExtension(path);
                 newBtn.Click += ClickButton;
+                newBtn.DataContext = path;
 
                 newBtn.ToolTip = Path.GetFileName(path);
 
                 if (!ButtonHolder.Children.Contains(newBtn) && !Path.GetExtension(path).Equals(".sav"))
                 {
                     ButtonHolder.Children.Add(newBtn);
-                    ButtonKeys.Add(Path.GetFileNameWithoutExtension(path).RemoveInvalidChars(), path);
+                    AllButtons.Add(new ButtonData(newBtn.Name, newBtn, newBtn.Content.ToString(), File.GetLastWriteTime(path), Path.GetExtension(path)));
                 }
             });
+        }
+
+        private void DeleteButton(string path)
+        {
+            var ButtonName = Path.GetFileNameWithoutExtension(path).RemoveInvalidChars();
+
+            Application.Current.Dispatcher.Invoke(delegate
+            {
+                if (ButtonHolder.Children.Contains(AllButtons.Select(x => x.Button).First()))
+                {
+                    var child = ButtonHolder.Children.OfType<Control>().Where(x => x.Name == ButtonName).First();
+                    ButtonHolder.Children.Remove(child);
+                }
+            });
+
+            AllButtons.RemoveAll(x => x.Name == ButtonName);
         }
 
         #region LiveUpdateButtons
         public void UpdateButtonsLive()
         {
-            string[] args = System.Environment.GetCommandLineArgs();
+            string[] args = Environment.GetCommandLineArgs();
             var folderName = $"{AppDomain.CurrentDomain.BaseDirectory}Games";
 
             // Create a new FileSystemWatcher and set its properties.
@@ -139,32 +146,29 @@ namespace Emulators.Pages
         {
             Console.WriteLine("File: " + e.Name + " " + e.ChangeType);
 
-            var buttonName = "Button_" + Path.GetFileNameWithoutExtension(e.FullPath).RemoveInvalidChars();
+            var ButtonName = Path.GetFileNameWithoutExtension(e.FullPath).RemoveInvalidChars();
 
-            Application.Current.Dispatcher.Invoke((Action)delegate
+            if (e.ChangeType == WatcherChangeTypes.Created)
             {
-                ButtonHolder.Children.Clear();
-            });
-
-            ButtonKeys.Clear();
-            AllButtons.Clear();
-            PlaceButtons();
+                MakeButton(e.FullPath);
+            }
+            else if (e.ChangeType == WatcherChangeTypes.Deleted)
+            {
+                DeleteButton(e.FullPath);
+            }
             ConsoleSort();
             SortButtons();
         }
 
         private void OnRenamed(object source, RenamedEventArgs e)
         {
+            var oldName = "Button_" + Path.GetFileNameWithoutExtension(e.OldName).RemoveInvalidChars();
+
             Console.WriteLine("File: {0} renamed to {1}", e.OldName, e.Name);
 
-            Application.Current.Dispatcher.Invoke((Action)delegate
-            {
-                ButtonHolder.Children.Clear();
-            });
+            DeleteButton(e.OldFullPath);
+            MakeButton(e.FullPath);
 
-            ButtonKeys.Clear();
-            AllButtons.Clear();
-            PlaceButtons();
             ConsoleSort();
             SortButtons();
         }
@@ -173,7 +177,7 @@ namespace Emulators.Pages
         private void ClickButton(object sender, RoutedEventArgs e)
         {
             var buttonName = (Button)sender;
-            var file = ButtonKeys[buttonName.Name].ToString().AsFileParameter();
+            var file = buttonName.DataContext.ToString().AsFileParameter();
 
             ButtonData buttonClickedInListToConsole = AllButtons.First(x => x.Name == buttonName.Name);
 
@@ -267,7 +271,7 @@ namespace Emulators.Pages
                 List<ButtonData> buttons = new List<ButtonData>();
                 foreach (Button button in ButtonHolder.Children)
                 {
-                    var file = ButtonKeys[button.Name];
+                    var file = button.DataContext.ToString();
                     buttons.Add(new ButtonData(button.Name, button, button.Content.ToString(), File.GetLastWriteTime(file)));
                 }
 
@@ -434,6 +438,15 @@ namespace Emulators.Pages
             }
         }
     }
+    public class ButtonDataPath : ButtonData
+    {
+        public string Path { get; set; }
+
+        public ButtonDataPath(string name, Button button, string content, DateTime time, string path) : base(name, button, content, time)
+        {
+            Path = path;
+        }
+    }
 
     public enum ConsoleEnum
     {
@@ -453,29 +466,7 @@ namespace Emulators.Pages
         Az,
         Za
     }
-    //public class ButtonData
-    //{
-    //    public string Name { get; set; }
-    //    public Button Button { get; set; }
-    //    public string Content { get; set; }
-    //    public DateTime Time { get; set; }
 
-    //    public ButtonCopy(string name, Button button, string content, DateTime time)
-    //    {
-    //        Name = name;
-    //        Button = button;
-    //        Content = content;
-    //        Time = time;
-    //    }
-    //}
 
-    //public class ButtonDataWithExtension : ButtonData
-    //{
-    //    public string Extension { get; set; }
 
-    //    public ButtonDataWithExtension(string name, Button button, string content, DateTime time, string extension) : base(name, button, content, time)
-    //    {
-    //        Extension = extension;
-    //    }
-    //}
 }
