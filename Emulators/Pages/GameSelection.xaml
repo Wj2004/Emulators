@@ -33,9 +33,10 @@
 			</Grid>
 
 
-			<ScrollViewer Grid.Row="2">
-				<WrapPanel x:Name="ButtonHolder" MouseLeftButtonDown="DoubleClickWrap" Background="#00000000"/>
+			<ScrollViewer Grid.Row="2" Panel.ZIndex="2">
+				<WrapPanel x:Name="ButtonHolder" AllowDrop="True" Drop="ButtonHolder_Drop" MouseLeftButtonDown="DoubleClickWrap" Background="#00000000"></WrapPanel>
 			</ScrollViewer>
+			<Label Panel.ZIndex="1" Grid.Row="2" Grid.Column="0" Name="NoFiles" Content="No files found! Doubleclick on me to open games folder!" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"></Label>
 
 
 

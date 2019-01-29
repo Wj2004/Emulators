@@ -45,13 +45,28 @@ namespace Emulators.Pages
 
         public void PlaceButtons()
         {
-            var baseFolder = $"{AppDomain.CurrentDomain.BaseDirectory}Games";
-            if (!Directory.Exists(baseFolder))
+            var gamesFolder = $"{AppDomain.CurrentDomain.BaseDirectory}Games";
+            if (!Directory.Exists(gamesFolder))
             {
-                Directory.CreateDirectory(baseFolder);
+                Directory.CreateDirectory(gamesFolder);
             }
 
-            var folder = Directory.GetFiles($"{baseFolder}", "*.*", SearchOption.AllDirectories);
+            if (!Directory.EnumerateFileSystemEntries(gamesFolder).Any())
+            {
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    NoFiles.Visibility = Visibility.Visible;
+                });
+            }
+            else
+            {
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    NoFiles.Visibility = Visibility.Collapsed;
+                });
+            }
+
+            var folder = Directory.GetFiles($"{gamesFolder}", "*.*", SearchOption.AllDirectories);
             foreach (string file in folder)
             {
                 MakeButton($"{Path.GetFullPath(file)}");
@@ -306,6 +321,30 @@ namespace Emulators.Pages
             }
             settings.Show();
             settings.Activate();
+        }
+
+        private void ButtonHolder_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var gamesFolder = $"{AppDomain.CurrentDomain.BaseDirectory}Games";
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                if (!Directory.Exists(gamesFolder))
+                {
+                    Directory.CreateDirectory(gamesFolder);
+                }
+
+                foreach (string file in files)
+                {
+                    string fileName = Path.GetFileName($"{file}");
+
+                    var buttonContent = Path.GetFileNameWithoutExtension(fileName);
+                    var buttonName = "Button_" + Path.GetFileNameWithoutExtension(fileName).RemoveInvalidChars();
+
+                    File.Move(file, $"{gamesFolder}\\{fileName}");
+                }
+            }
         }
     }
 
