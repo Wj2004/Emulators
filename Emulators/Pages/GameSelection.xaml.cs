@@ -43,7 +43,7 @@ namespace Emulators.Pages
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "GameBoy", DataContext = ConsoleEnum.GameBoy });
         }
 
-        public void PlaceButtons()
+        private void PlaceButtons()
         {
             var gamesFolder = $"{AppDomain.CurrentDomain.BaseDirectory}Games";
             if (!Directory.Exists(gamesFolder))
@@ -73,7 +73,6 @@ namespace Emulators.Pages
             }
 
             //AllButtons:
-
             Application.Current.Dispatcher.Invoke((Action)delegate
             {
                 foreach (Button button in ButtonHolder.Children)
@@ -85,9 +84,9 @@ namespace Emulators.Pages
             
         }
 
-        
 
-        public void MakeButton(string path)
+
+        private void MakeButton(string path)
         {
             Application.Current.Dispatcher.Invoke((Action)delegate
             {
@@ -171,7 +170,7 @@ namespace Emulators.Pages
         }
         #endregion
 
-        public void ClickButton(object sender, RoutedEventArgs e)
+        private void ClickButton(object sender, RoutedEventArgs e)
         {
             var buttonName = (Button)sender;
             var file = ButtonKeys[buttonName.Name].ToString().AsFileParameter();
@@ -226,7 +225,7 @@ namespace Emulators.Pages
         }
 
 
-        public void ConsoleSort()
+        private void ConsoleSort()
         {
             Application.Current.Dispatcher.Invoke((Action)delegate
             {
@@ -258,7 +257,7 @@ namespace Emulators.Pages
             });
         }
 
-        public void SortButtons()
+        private void SortButtons()
         {
             Application.Current.Dispatcher.Invoke((Action)delegate
             {
@@ -297,7 +296,36 @@ namespace Emulators.Pages
         }
         #endregion
 
-        public void DoubleClickWrap(object sender, MouseButtonEventArgs e)
+        #region search functions
+        private void Searchbar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ConsoleFilter.SelectedIndex = 0;
+            Search();
+            SortButtons();
+        }
+
+        private void Search()
+        {
+            List<ButtonData> final = new List<ButtonData>();
+
+            final = AllButtons.Where(x => x.Content.ToString().ToLower().Contains(Searchbar.Text.ToLower())).ToList();
+
+            foreach (Button button in AllButtons.Select(x => x.Button))
+            {
+                Application.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    ButtonHolder.Children.Remove(button);
+                });
+            }
+
+            foreach (Button button in final.Select(x => x.Button))
+            {
+                ButtonHolder.Children.Add(button);
+            }
+        }
+
+        #endregion
+        private void DoubleClickWrap(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
             {
@@ -307,7 +335,7 @@ namespace Emulators.Pages
         }
 
         Settings.SettingsWindow settings;
-        public void SettingsClick(object sender, RoutedEventArgs e)
+        private void SettingsClick(object sender, RoutedEventArgs e)
         {
             if (settings == null)
             {

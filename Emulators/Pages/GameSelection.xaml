@@ -59,9 +59,9 @@
 					</ComboBox>
 				</WrapPanel>
 
-				<WrapPanel Grid.Column="2" Background="{x:Null}" VerticalAlignment="Center" Height="28" Visibility="Collapsed">
+				<WrapPanel Grid.Column="2" Background="{x:Null}" VerticalAlignment="Center" Height="28" Visibility="Visible">
 					<Label>Search</Label>
-					<TextBox x:Name="Searchbar" HorizontalAlignment="Left" Height="27" TextWrapping="Wrap" Width="158" VerticalContentAlignment="Center"/>
+					<TextBox x:Name="Searchbar" TextChanged="Searchbar_TextChanged" HorizontalAlignment="Left" Height="27" TextWrapping="Wrap" Width="158" VerticalContentAlignment="Center"/>
 				</WrapPanel>
 			</Grid>
 		</Grid>
