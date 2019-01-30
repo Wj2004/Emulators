@@ -69,9 +69,6 @@ namespace Emulators.Pages
             {
                 MakeButton($"{Path.GetFullPath(file)}");
             }
-
-            //AllButtons:
-            
         }
 
 
@@ -190,6 +187,11 @@ namespace Emulators.Pages
             var snes = $"{emulatorsFolder}/Snes9X/snes9x.exe";
             var nes = $"{emulatorsFolder}/Nestopia/nestopia.exe";
             var gameboy = $"{emulatorsFolder}/VisualBoyAdvance/VisualBoyAdvance.exe";
+
+            if (!File.Exists(n64))
+            {
+                Debug.Write("n64 emulator" + " dosen't exist");
+            }
 
             switch (console)
             {
@@ -466,7 +468,4 @@ namespace Emulators.Pages
         Az,
         Za
     }
-
-
-
 }
