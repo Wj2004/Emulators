@@ -196,26 +196,38 @@ namespace Emulators.Pages
             switch (console)
             {
                 case ConsoleEnum.Nintendo64:
-                    Process.Start(n64, $"{file}");
+                    StartFile(n64, file);
                     break;
                 case ConsoleEnum.Wii:
                     Process.Start(wii, $"{file}");
                     break;
                 case ConsoleEnum.GameCube:
-                    Process.Start(gamecube, $"{file}");
+                    StartFile(gamecube, file);
                     break;
                 case ConsoleEnum.SuperNES:
-                    Process.Start(snes, $"{file}");
+                    StartFile(snes, file);
                     break;
                 case ConsoleEnum.NES:
-                    Process.Start(nes, $"{file}");
+                    StartFile(nes, file);
                     break;
                 case ConsoleEnum.GameBoy:
-                    Process.Start(gameboy, $"{file}");
+                    StartFile(gameboy, file);
                     break;
                 default:
                     Process.Start($"{file}");
                     break;
+            }
+        }
+
+        private void StartFile(string emulator, string file)
+        {
+            if (File.Exists(emulator))
+            {
+                Process.Start(emulator, $"{file}");
+            }
+            else
+            {
+                Debug.WriteLine("Emulator dosen't exist");
             }
         }
 
