@@ -9,61 +9,66 @@
       Title="GameSelection">
 
 	<Grid x:Name="LayoutRoot" Style="{DynamicResource BackgroundGrid}">
-		<Grid x:Name="Layout">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="61"/>
-				<RowDefinition Height="40"/>
-				<RowDefinition Height="349*"/>
-			</Grid.RowDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="61"/>
+			<RowDefinition Height="40"/>
+			<RowDefinition Height="349*"/>
+		</Grid.RowDefinitions>
 
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition/>
-					<ColumnDefinition Width="677"/>
-				</Grid.ColumnDefinitions>
-				<Label Grid.Row="0" FontSize="36">Games</Label>
-			</Grid>
-
-			<Grid Panel.ZIndex="100" Name="Settings" HorizontalAlignment="Right">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="738"/>
-					<ColumnDefinition Width="62"/>
-				</Grid.ColumnDefinitions>
-				<Button Visibility="Collapsed" Content="Settings" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="62" Height="61" Margin="0" Click="SettingsClick"/>
-			</Grid>
-
-
-			<ScrollViewer Grid.Row="2" Panel.ZIndex="2">
-				<WrapPanel x:Name="ButtonHolder" AllowDrop="True" Drop="ButtonHolder_Drop" MouseLeftButtonDown="DoubleClickWrap" Background="#00000000"></WrapPanel>
-			</ScrollViewer>
-			<Label Panel.ZIndex="1" Grid.Row="2" Grid.Column="0" Name="NoFiles" Content="No files found! Doubleclick on me to open games folder!" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"></Label>
-
-
-
-			<Grid x:Name="TopBar" Grid.Row="1" Style="{DynamicResource TopBarGrid}" >
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="207"/>
-					<ColumnDefinition Width="213"/>
-					<ColumnDefinition Width="380"/>
-				</Grid.ColumnDefinitions>
-
-				<WrapPanel Grid.Column="0" Background="{x:Null}" VerticalAlignment="Center" Height="28">
-					<Label>Console</Label>
-					<ComboBox x:Name="ConsoleFilter" Width="144" Height="27" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="Console_SelectionChanged">
-					</ComboBox>
-				</WrapPanel>
-
-				<WrapPanel Grid.Column="1" Background="{x:Null}" VerticalAlignment="Center" Height="28">
-					<Label>Sort by</Label>
-					<ComboBox x:Name="SortBy" Width="144" Height="27" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="SortBy_SelectionChanged">
-					</ComboBox>
-				</WrapPanel>
-
-				<WrapPanel Grid.Column="2" Background="{x:Null}" VerticalAlignment="Center" Height="28" Visibility="Visible">
-					<Label>Search</Label>
-					<TextBox x:Name="Searchbar" TextChanged="Searchbar_TextChanged" HorizontalAlignment="Left" Height="27" TextWrapping="Wrap" Width="158" VerticalContentAlignment="Center"/>
-				</WrapPanel>
-			</Grid>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition Width="677"/>
+			</Grid.ColumnDefinitions>
+			<Label Grid.Row="0" FontSize="36">Games</Label>
 		</Grid>
+
+		<Grid Panel.ZIndex="100" Name="Settings" HorizontalAlignment="Right">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="738"/>
+				<ColumnDefinition Width="62"/>
+			</Grid.ColumnDefinitions>
+			<Button Visibility="Collapsed" Content="Settings" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="62" Height="61" Margin="0" Click="SettingsClick"/>
+		</Grid>
+
+
+		<ScrollViewer Grid.Row="2" Panel.ZIndex="2">
+			<WrapPanel x:Name="ButtonHolder" AllowDrop="True" Drop="ButtonHolder_Drop" MouseLeftButtonDown="DoubleClickWrap" Background="#00000000"></WrapPanel>
+		</ScrollViewer>
+		<Label Panel.ZIndex="1" Grid.Row="2" Grid.Column="0" Name="NoFiles" Content="No files found! Doubleclick on me to open games folder!" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"></Label>
+
+
+
+		<Grid x:Name="TopBar" Grid.Row="1" Style="{DynamicResource TopBarGrid}" >
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="207"/>
+				<ColumnDefinition Width="213"/>
+				<ColumnDefinition Width="380"/>
+			</Grid.ColumnDefinitions>
+
+			<WrapPanel Grid.Column="0" Background="{x:Null}" VerticalAlignment="Center" Height="28">
+				<Label>Console</Label>
+				<ComboBox x:Name="ConsoleFilter" Width="144" Height="27" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="Console_SelectionChanged">
+				</ComboBox>
+			</WrapPanel>
+
+			<WrapPanel Grid.Column="1" Background="{x:Null}" VerticalAlignment="Center" Height="28">
+				<Label>Sort by</Label>
+				<ComboBox x:Name="SortBy" Width="144" Height="27" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="SortBy_SelectionChanged">
+				</ComboBox>
+			</WrapPanel>
+
+			<WrapPanel Grid.Column="2" Background="{x:Null}" VerticalAlignment="Center" Height="28" Visibility="Visible">
+				<Label>Search</Label>
+				<TextBox x:Name="Searchbar" TextChanged="Searchbar_TextChanged" HorizontalAlignment="Left" Height="27" TextWrapping="Wrap" Width="158" VerticalContentAlignment="Center"/>
+			</WrapPanel>
+		</Grid>
+
+
+
+		<Grid Name="PopUp" Visibility="Collapsed" Panel.ZIndex="100" Background="#8C000000" VerticalAlignment="Center" HorizontalAlignment="Center" Height="450" Width="800" Grid.RowSpan="3">
+			
+		</Grid>
+
 	</Grid>
 </Page>

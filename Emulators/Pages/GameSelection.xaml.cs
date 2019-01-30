@@ -188,18 +188,13 @@ namespace Emulators.Pages
             var nes = $"{emulatorsFolder}/Nestopia/nestopia.exe";
             var gameboy = $"{emulatorsFolder}/VisualBoyAdvance/VisualBoyAdvance.exe";
 
-            if (!File.Exists(n64))
-            {
-                Debug.Write("n64 emulator" + " dosen't exist");
-            }
-
             switch (console)
             {
                 case ConsoleEnum.Nintendo64:
                     StartFile(n64, file);
                     break;
                 case ConsoleEnum.Wii:
-                    Process.Start(wii, $"{file}");
+                    StartFile(wii, file);
                     break;
                 case ConsoleEnum.GameCube:
                     StartFile(gamecube, file);
@@ -227,8 +222,18 @@ namespace Emulators.Pages
             }
             else
             {
-                Debug.WriteLine("Emulator dosen't exist");
+                MakePopup("d");
             }
+        }
+
+        private void MakePopup(string error)
+        {
+            Label ErrorMessage = new Label
+            {
+                Content = error
+            };
+
+            PopUp.Children.Add(new Label());
         }
 
         #region sorting
