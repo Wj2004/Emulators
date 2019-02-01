@@ -22,13 +22,16 @@
 			<TreeView Name="Category" Grid.RowSpan="2" SelectedItemChanged="TreeView_Changed">
 			</TreeView>
 
-
 			<Frame Name="SettingView" NavigationUIVisibility="Hidden" Grid.Column="1"/>
-			
-			
-			<Grid Grid.Row="1" Grid.Column="1">
+
+			<!--<Button Content="Save" Grid.Column="1" Click="Button_Save" Grid.Row="1"/>-->
+			<Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<Button Content="Save" Grid.Column="1" Click="Button_Save" Width="50" Margin="0, 0, 0, 0"/>
 			</Grid>
-			<Button Content="Close" Grid.Column="1" Margin="244,0,0,0" Click="Button_Close" Grid.Row="1"/>
 		</Grid>
 	</Grid>
 </Window>

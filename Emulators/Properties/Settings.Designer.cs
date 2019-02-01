@@ -34,5 +34,29 @@ namespace Emulators.Properties {
                 this["Theme"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WiiEmu {
+            get {
+                return ((string)(this["WiiEmu"]));
+            }
+            set {
+                this["WiiEmu"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GameCubeEmu {
+            get {
+                return ((string)(this["GameCubeEmu"]));
+            }
+            set {
+                this["GameCubeEmu"] = value;
+            }
+        }
     }
 }

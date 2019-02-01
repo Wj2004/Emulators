@@ -181,8 +181,9 @@ namespace Emulators.Pages
             var console = buttonClickedInListToConsole.Console;
 
             var emulatorsFolder = $"{AppDomain.CurrentDomain.BaseDirectory}Emulators";
+
             var n64 = $"{emulatorsFolder}/Project64/Project64.exe";
-            var wii = $"{emulatorsFolder}/Dolphin/Dolphin.exe";
+            var wii = $"{Properties.Settings.Default.WiiEmu}";
             var gamecube = $"{emulatorsFolder}/Dolphin/Dolphin.exe";
             var snes = $"{emulatorsFolder}/Snes9X/snes9x.exe";
             var nes = $"{emulatorsFolder}/Nestopia/nestopia.exe";
@@ -191,22 +192,22 @@ namespace Emulators.Pages
             switch (console)
             {
                 case ConsoleEnum.Nintendo64:
-                    StartFile(n64, file);
+                    StartFile(n64, file, "Nintendo 64");
                     break;
                 case ConsoleEnum.Wii:
-                    StartFile(wii, file);
+                    StartFile(wii, file, "Wii");
                     break;
                 case ConsoleEnum.GameCube:
-                    StartFile(gamecube, file);
+                    StartFile(gamecube, file, "GameCube");
                     break;
                 case ConsoleEnum.SuperNES:
-                    StartFile(snes, file);
+                    StartFile(snes, file, "Super Nintendo Entertainment System");
                     break;
                 case ConsoleEnum.NES:
-                    StartFile(nes, file);
+                    StartFile(nes, file, "Nintendo Entertainment System");
                     break;
                 case ConsoleEnum.GameBoy:
-                    StartFile(gameboy, file);
+                    StartFile(gameboy, file, "Gameboy");
                     break;
                 default:
                     Process.Start($"{file}");
@@ -214,7 +215,7 @@ namespace Emulators.Pages
             }
         }
 
-        private void StartFile(string emulator, string file)
+        private void StartFile(string emulator, string file, string emulatorName)
         {
             if (File.Exists(emulator))
             {
@@ -222,18 +223,11 @@ namespace Emulators.Pages
             }
             else
             {
-                MakePopup("d");
+                if (MessageBox.Show($"You're missing an emulator for: {emulatorName}. Would you like to set a location for that emulator?", "Missing emulator", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                {
+                    Debug.Write("good");
+                }
             }
-        }
-
-        private void MakePopup(string error)
-        {
-            Label ErrorMessage = new Label
-            {
-                Content = error
-            };
-
-            PopUp.Children.Add(new Label());
         }
 
         #region sorting
@@ -348,6 +342,7 @@ namespace Emulators.Pages
         }
 
         #endregion
+
         private void DoubleClickWrap(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
@@ -389,10 +384,6 @@ namespace Emulators.Pages
                 foreach (string file in files)
                 {
                     string fileName = Path.GetFileName($"{file}");
-
-                    var buttonContent = Path.GetFileNameWithoutExtension(fileName);
-                    var buttonName = "Button_" + Path.GetFileNameWithoutExtension(fileName).RemoveInvalidChars();
-
                     File.Move(file, $"{gamesFolder}\\{fileName}");
                 }
             }

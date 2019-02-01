@@ -17,13 +17,16 @@ namespace Emulators.Pages.Settings
 
         private void PopulateTreeView()
         {
-            Category.Items.Add(new TreeViewItem { Header = "Emulators", DataContext = Setting.Emulators });
+            TreeViewItem EmulatorItem = new TreeViewItem { Header = "Emulators", DataContext = Setting.Emulators };
+            Category.Items.Add(EmulatorItem);
             Category.Items.Add(new TreeViewItem { Header = "Theme", DataContext = Setting.Theme });
+
+            EmulatorItem.Focus();
         }
 
-        private void Button_Close(object sender, RoutedEventArgs e)
+        private void Button_Save(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
         private void TreeView_Changed(object sender, RoutedPropertyChangedEventArgs<object> e)

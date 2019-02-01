@@ -4,18 +4,31 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Emulators.Pages"
+	  xmlns:properties="clr-namespace:Emulators.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="539" d:DesignWidth="352"
       Title="EmulatorsSettings">
 
 	<Grid Name="LayoutRoot">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="23*"/>
-			<RowDefinition Height="516*"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-		<Label Content="Wii emulator:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-		<Button Content="Select file" HorizontalAlignment="Right" VerticalAlignment="Top" Click="Button_Click"/>
-		<TextBox Name="Textbox" HorizontalAlignment="Left" Height="23" Margin="81,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+
+		<Label Content="Wii emulator:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+		<TextBox IsReadOnly="True" DataContext="Properties.Settings.Default.WiiEmu" Name="WiiBox" Text="{Binding Source={x:Static properties:Settings.Default}, Path=WiiEmu}" Grid.Column="1" ToolTip="{Binding Source={x:Static properties:Settings.Default}, Path=WiiEmu}" PreviewMouseUp="PreviewMouseUp"/>
+
+		<Label Grid.Row="1" Content="GameCube emulator:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+		<TextBox Grid.Row="1" DataContext="Properties.Settings.Default.GameCubeEmu" IsReadOnly="True" Name="CubeBox" Text="{Binding Source={x:Static properties:Settings.Default}, Path=GameCubeEmu}" Grid.Column="1" ToolTip="{Binding Source={x:Static properties:Settings.Default}, Path=GameCubeEmu}" PreviewMouseUp="PreviewMouseUp"/>
 
 	</Grid>
 </Page>

@@ -23,12 +23,12 @@
 			<Label Grid.Row="0" FontSize="36">Games</Label>
 		</Grid>
 
-		<Grid Panel.ZIndex="100" Name="Settings" HorizontalAlignment="Right">
+		<Grid Visibility="Visible" Panel.ZIndex="100" Name="Settings" HorizontalAlignment="Right">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="738"/>
 				<ColumnDefinition Width="62"/>
 			</Grid.ColumnDefinitions>
-			<Button Visibility="Collapsed" Content="Settings" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="62" Height="61" Margin="0" Click="SettingsClick"/>
+			<Button Content="Settings" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="62" Height="61" Margin="0" Click="SettingsClick"/>
 		</Grid>
 
 
@@ -63,12 +63,5 @@
 				<TextBox x:Name="Searchbar" TextChanged="Searchbar_TextChanged" HorizontalAlignment="Left" Height="27" TextWrapping="Wrap" Width="158" VerticalContentAlignment="Center"/>
 			</WrapPanel>
 		</Grid>
-
-
-
-		<Grid Name="PopUp" Visibility="Collapsed" Panel.ZIndex="100" Background="#8C000000" VerticalAlignment="Center" HorizontalAlignment="Center" Height="450" Width="800" Grid.RowSpan="3">
-			
-		</Grid>
-
 	</Grid>
 </Page>

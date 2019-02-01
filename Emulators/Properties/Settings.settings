@@ -5,5 +5,11 @@
     <Setting Name="Theme" Type="System.String" Scope="User">
       <Value Profile="(Default)">Dark</Value>
     </Setting>
+    <Setting Name="WiiEmu" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="GameCubeEmu" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
