@@ -26,6 +26,7 @@ namespace Emulators.Pages.Settings
 
         private void Button_Save(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.Save();
             this.Close();
         }
 

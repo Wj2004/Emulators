@@ -182,12 +182,12 @@ namespace Emulators.Pages
 
             var emulatorsFolder = $"{AppDomain.CurrentDomain.BaseDirectory}Emulators";
 
-            var n64 = $"{emulatorsFolder}/Project64/Project64.exe";
+            var n64 = $"{Properties.Settings.Default.N64Emu}";
             var wii = $"{Properties.Settings.Default.WiiEmu}";
-            var gamecube = $"{emulatorsFolder}/Dolphin/Dolphin.exe";
-            var snes = $"{emulatorsFolder}/Snes9X/snes9x.exe";
-            var nes = $"{emulatorsFolder}/Nestopia/nestopia.exe";
-            var gameboy = $"{emulatorsFolder}/VisualBoyAdvance/VisualBoyAdvance.exe";
+            var gamecube = $"{Properties.Settings.Default.GameCubeEmu}";
+            var snes = $"{Properties.Settings.Default.SnesEmu}";
+            var nes = $"{Properties.Settings.Default.NesEmu}";
+            var gameboy = $"{Properties.Settings.Default.GameboyEmu}";
 
             switch (console)
             {

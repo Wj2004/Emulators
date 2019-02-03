@@ -23,12 +23,24 @@
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
-
+		<!--
 		<Label Content="Wii emulator:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-		<TextBox IsReadOnly="True" DataContext="Properties.Settings.Default.WiiEmu" Name="WiiBox" Text="{Binding Source={x:Static properties:Settings.Default}, Path=WiiEmu}" Grid.Column="1" ToolTip="{Binding Source={x:Static properties:Settings.Default}, Path=WiiEmu}" PreviewMouseUp="PreviewMouseUp"/>
+		<TextBox Name="WiiBox" Text="{Binding Source={x:Static properties:Settings.Default}, Path=WiiEmu}" IsReadOnly="True" Grid.Column="1" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}" PreviewMouseUp="PreviewMouseUp"/>
 
 		<Label Grid.Row="1" Content="GameCube emulator:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-		<TextBox Grid.Row="1" DataContext="Properties.Settings.Default.GameCubeEmu" IsReadOnly="True" Name="CubeBox" Text="{Binding Source={x:Static properties:Settings.Default}, Path=GameCubeEmu}" Grid.Column="1" ToolTip="{Binding Source={x:Static properties:Settings.Default}, Path=GameCubeEmu}" PreviewMouseUp="PreviewMouseUp"/>
+		<TextBox Grid.Row="1" Name="CubeBox" Text="{Binding Source={x:Static properties:Settings.Default}, Path=GameCubeEmu}" IsReadOnly="True" Grid.Column="1" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}" PreviewMouseUp="PreviewMouseUp"/>
 
+		<Label Grid.Row="2" Content="Snes emulator:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+		<TextBox Grid.Row="2" Name="SnesBox" Text="{Binding Source={x:Static properties:Settings.Default}, Path=SnesEmu}" IsReadOnly="True" Grid.Column="1" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}" PreviewMouseUp="PreviewMouseUp"/>
+
+		<Label Grid.Row="3" Content="Nes emulator:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+		<TextBox Grid.Row="3" Name="NesBox" Text="{Binding Source={x:Static properties:Settings.Default}, Path=NesEmu}" IsReadOnly="True" Grid.Column="1" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}" PreviewMouseUp="PreviewMouseUp"/>
+
+		<Label Grid.Row="4" Content="N64 emulator:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+		<TextBox Grid.Row="4" Name="N64Box" Text="{Binding Source={x:Static properties:Settings.Default}, Path=N64Emu}" IsReadOnly="True" Grid.Column="1" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}" PreviewMouseUp="PreviewMouseUp"/>
+		
+		<Label Grid.Row="5" Content="Gameboy emulator:" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+		<TextBox Grid.Row="5" Name="GameboyBox" Text="{Binding Source={x:Static properties:Settings.Default}, Path=GameboyEmu}" IsReadOnly="True" Grid.Column="1" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Text}" PreviewMouseUp="PreviewMouseUp"/>
+		-->
 	</Grid>
 </Page>

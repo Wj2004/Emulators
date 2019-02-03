@@ -58,5 +58,53 @@ namespace Emulators.Properties {
                 this["GameCubeEmu"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SnesEmu {
+            get {
+                return ((string)(this["SnesEmu"]));
+            }
+            set {
+                this["SnesEmu"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string NesEmu {
+            get {
+                return ((string)(this["NesEmu"]));
+            }
+            set {
+                this["NesEmu"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string N64Emu {
+            get {
+                return ((string)(this["N64Emu"]));
+            }
+            set {
+                this["N64Emu"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GameboyEmu {
+            get {
+                return ((string)(this["GameboyEmu"]));
+            }
+            set {
+                this["GameboyEmu"] = value;
+            }
+        }
     }
 }
