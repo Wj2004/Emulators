@@ -225,7 +225,7 @@ namespace Emulators.Pages
             {
                 if (MessageBox.Show($"You're missing an emulator for: {emulatorName}. Would you like to set a location for that emulator?", "Missing emulator", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
                 {
-                    Debug.Write("good");
+                    Extensions.OpenSettings();
                 }
             }
         }
@@ -352,21 +352,9 @@ namespace Emulators.Pages
             }
         }
 
-        Settings.SettingsWindow settings;
         private void SettingsClick(object sender, RoutedEventArgs e)
         {
-            if (settings == null)
-            {
-                settings = new Settings.SettingsWindow();
-            }
-            settings.Closed += delegate { settings = null; };
-
-            if (settings.WindowState == WindowState.Minimized)
-            {
-                settings.WindowState = WindowState.Normal;
-            }
-            settings.Show();
-            settings.Activate();
+            Extensions.OpenSettings();
         }
 
         private void ButtonHolder_Drop(object sender, DragEventArgs e)

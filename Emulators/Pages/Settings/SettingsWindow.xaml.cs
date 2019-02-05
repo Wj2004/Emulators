@@ -19,7 +19,7 @@ namespace Emulators.Pages.Settings
         {
             TreeViewItem EmulatorItem = new TreeViewItem { Header = "Emulators", DataContext = Setting.Emulators };
             Category.Items.Add(EmulatorItem);
-            Category.Items.Add(new TreeViewItem { Header = "Theme", DataContext = Setting.Theme });
+            //Category.Items.Add(new TreeViewItem { Header = "Theme", DataContext = Setting.Theme });
 
             EmulatorItem.Focus();
         }
