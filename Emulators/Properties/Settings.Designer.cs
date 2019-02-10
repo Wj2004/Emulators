@@ -106,5 +106,29 @@ namespace Emulators.Properties {
                 this["GameboyEmu"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GameFolder {
+            get {
+                return ((string)(this["GameFolder"]));
+            }
+            set {
+                this["GameFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WiiUEmu {
+            get {
+                return ((string)(this["WiiUEmu"]));
+            }
+            set {
+                this["WiiUEmu"] = value;
+            }
+        }
     }
 }

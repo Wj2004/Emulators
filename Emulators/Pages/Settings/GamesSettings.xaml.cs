@@ -1,31 +1,34 @@
-﻿using System;
-using System.IO;
+﻿using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
-using System.Linq;
-using System.Diagnostics;
-using System.Configuration;
 using System.Windows.Data;
+using System.Windows.Forms;
+using Binding = System.Windows.Data.Binding;
+using Label = System.Windows.Controls.Label;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace Emulators.Pages.Settings
 {
-    public partial class EmulatorsSettings : Page
+    /// <summary>
+    /// Interaction logic for GamesSettings.xaml
+    /// </summary>
+    public partial class GamesSettings : Page
     {
-        public EmulatorsSettings()
+        public GamesSettings()
         {
             InitializeComponent();
 
-            MakeGridList();
+            MakeList();
         }
 
-        private void MakeGridList()
+        private void MakeList()
         {
             int i = 0;
             Properties.Settings.Default.Reload();
 
             foreach (SettingsProperty s in Properties.Settings.Default.Properties)
             {
-                if (s.Name.Contains("Emu"))
+                if (s.Name.Contains("GameFolder"))
                 {
                     RowDefinition rowDefinition = new RowDefinition();
                     rowDefinition.Height = GridLength.Auto;
@@ -33,13 +36,13 @@ namespace Emulators.Pages.Settings
 
                     Label l = new Label()
                     {
-                        Content = s.Name.Replace("Emu", ":")
+                        Content = s.Name.Replace("GameFolder", "Gamefolder:")
                     };
                     Grid.SetRow(l, i);
                     Grid.SetColumn(l, 0);
                     LayoutRoot.Children.Add(l);
 
-                    TextBox t = new TextBox()
+                    System.Windows.Controls.TextBox t = new TextBox()
                     {
                         Name = s.DefaultValue.ToString(),
                         IsReadOnly = true,
@@ -68,22 +71,16 @@ namespace Emulators.Pages.Settings
         private new void PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             // Create OpenFileDialog 
-            Microsoft.Win32.OpenFileDialog selectFile = new Microsoft.Win32.OpenFileDialog
-            {
-                // Set filter for file extension and default file extension 
-                DefaultExt = ".exe",
-                Filter = "EXE files (*.exe)|*.exe"
-            };
+            FolderBrowserDialog selectFolder = new FolderBrowserDialog();
 
             // Display OpenFileDialog by calling ShowDialog method 
-            bool? file = selectFile.ShowDialog();
+            DialogResult folder = selectFolder.ShowDialog();
 
-            if (file.HasValue && file.Value)
+            if (folder.ToString().Equals("OK"))
             {
-                string filename = selectFile.FileName;
                 var t = (TextBox)sender;
 
-                t.Text = $"{filename}";
+                t.Text = $"{selectFolder.SelectedPath}";
             }
         }
     }

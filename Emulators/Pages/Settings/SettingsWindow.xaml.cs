@@ -19,7 +19,8 @@ namespace Emulators.Pages.Settings
         {
             TreeViewItem EmulatorItem = new TreeViewItem { Header = "Emulators", DataContext = Setting.Emulators };
             Category.Items.Add(EmulatorItem);
-            //Category.Items.Add(new TreeViewItem { Header = "Theme", DataContext = Setting.Theme });
+            Category.Items.Add(new TreeViewItem { Header = "Games", DataContext = Setting.Games });
+            Category.Items.Add(new TreeViewItem { Header = "Theme", DataContext = Setting.Theme });
 
             EmulatorItem.Focus();
         }
@@ -40,6 +41,9 @@ namespace Emulators.Pages.Settings
                 case Setting.Emulators:
                     SettingView.Navigate(new EmulatorsSettings());
                     break;
+                case Setting.Games:
+                    SettingView.Navigate(new GamesSettings());
+                    break;
                 case Setting.Theme:
                     break;
                 default:
@@ -52,6 +56,7 @@ namespace Emulators.Pages.Settings
     public enum Setting
     {
         Emulators,
+        Games,
         Theme
     }
 }

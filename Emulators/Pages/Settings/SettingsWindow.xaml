@@ -23,8 +23,7 @@
 			</TreeView>
 
 			<Frame Name="SettingView" NavigationUIVisibility="Hidden" Grid.Column="1"/>
-
-			<!--<Button Content="Save" Grid.Column="1" Click="Button_Save" Grid.Row="1"/>-->
+			
 			<Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>

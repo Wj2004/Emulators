@@ -34,6 +34,7 @@ namespace Emulators.Pages
         {
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "All", DataContext = ConsoleEnum.All });
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "Wii", DataContext = ConsoleEnum.Wii });
+            ConsoleFilter.Items.Add(new ComboBoxItem { Content = "Wii U", DataContext = ConsoleEnum.WiiU });
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "N64", DataContext = ConsoleEnum.Nintendo64 });
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "SNES", DataContext = ConsoleEnum.SuperNES });
             ConsoleFilter.Items.Add(new ComboBoxItem { Content = "NES", DataContext = ConsoleEnum.NES });
@@ -43,31 +44,26 @@ namespace Emulators.Pages
 
         private void PlaceButtons()
         {
-            var gamesFolder = $"{AppDomain.CurrentDomain.BaseDirectory}Games";
-            if (!Directory.Exists(gamesFolder))
-            {
-                Directory.CreateDirectory(gamesFolder);
-            }
+            var gamesFolder = $"{Properties.Settings.Default.GameFolder}";
 
-            if (!Directory.EnumerateFileSystemEntries(gamesFolder).Any())
+            if (!gamesFolder.Equals("") && Directory.Exists(gamesFolder))
             {
-                Application.Current.Dispatcher.Invoke((Action)delegate
+                var folder = Directory.GetFiles($"{gamesFolder}", "*.*", SearchOption.AllDirectories);
+                foreach (string file in folder)
                 {
-                    NoFiles.Visibility = Visibility.Visible;
-                });
+                    MakeButton($"{Path.GetFullPath(file)}");
+                }
             }
             else
             {
-                Application.Current.Dispatcher.Invoke((Action)delegate
+                if (MessageBox.Show($"You need to set a folder to store your games, before you can start. Will you do it now?", "Setup", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
                 {
-                    NoFiles.Visibility = Visibility.Collapsed;
-                });
-            }
-
-            var folder = Directory.GetFiles($"{gamesFolder}", "*.*", SearchOption.AllDirectories);
-            foreach (string file in folder)
-            {
-                MakeButton($"{Path.GetFullPath(file)}");
+                    OpenSettings.Open("Games");
+                }
+                else
+                {
+                    Application.Current.Shutdown();
+                }
             }
         }
 
@@ -153,13 +149,14 @@ namespace Emulators.Pages
             {
                 DeleteButton(e.FullPath);
             }
+
             ConsoleSort();
             SortButtons();
         }
 
         private void OnRenamed(object source, RenamedEventArgs e)
         {
-            var oldName = "Button_" + Path.GetFileNameWithoutExtension(e.OldName).RemoveInvalidChars();
+            var oldName = Path.GetFileNameWithoutExtension(e.OldName).RemoveInvalidChars();
 
             Console.WriteLine("File: {0} renamed to {1}", e.OldName, e.Name);
 
@@ -180,10 +177,9 @@ namespace Emulators.Pages
 
             var console = buttonClickedInListToConsole.Console;
 
-            var emulatorsFolder = $"{AppDomain.CurrentDomain.BaseDirectory}Emulators";
-
             var n64 = $"{Properties.Settings.Default.N64Emu}";
             var wii = $"{Properties.Settings.Default.WiiEmu}";
+            var wiiu = $"{Properties.Settings.Default.WiiUEmu}";
             var gamecube = $"{Properties.Settings.Default.GameCubeEmu}";
             var snes = $"{Properties.Settings.Default.SnesEmu}";
             var nes = $"{Properties.Settings.Default.NesEmu}";
@@ -209,6 +205,9 @@ namespace Emulators.Pages
                 case ConsoleEnum.GameBoy:
                     StartFile(gameboy, file, "Gameboy");
                     break;
+                case ConsoleEnum.WiiU:
+                    StartFile(wiiu, $"-g {file}", "Wii U");
+                    break;
                 default:
                     Process.Start($"{file}");
                     break;
@@ -225,7 +224,7 @@ namespace Emulators.Pages
             {
                 if (MessageBox.Show($"You're missing an emulator for: {emulatorName}. Would you like to set a location for that emulator?", "Missing emulator", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
                 {
-                    Extensions.OpenSettings();
+                    OpenSettings.Open("Emulators");
                 }
             }
         }
@@ -354,7 +353,7 @@ namespace Emulators.Pages
 
         private void SettingsClick(object sender, RoutedEventArgs e)
         {
-            Extensions.OpenSettings();
+            OpenSettings.Open();
         }
 
         private void ButtonHolder_Drop(object sender, DragEventArgs e)
@@ -446,11 +445,12 @@ namespace Emulators.Pages
         }
     }
 
-    public enum ConsoleEnum
+    public enum ConsoleEnum : int
     {
         Unknown,
         All,
         Wii,
+        WiiU,
         Nintendo64,
         SuperNES,
         NES,
