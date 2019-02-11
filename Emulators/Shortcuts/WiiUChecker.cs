@@ -8,12 +8,16 @@ namespace Emulators.Shortcuts
     {
         public static string CheckForWiiUFolder(string path)
         {
-            var filesInFolder = Directory.GetFiles($"{path}", "*.*", SearchOption.AllDirectories);
-            foreach (string file in filesInFolder)
+            var checkForCode = Directory.Exists($"{path}/code");
+            if (checkForCode)
             {
-                if (Path.GetExtension(file).Equals(".rpx") || Path.GetExtension(file).Equals(".wud") || Path.GetExtension(file).Equals(".wux") || Path.GetExtension(file).Equals(".wad") || Path.GetExtension(file).Equals(".elf"))
+                foreach (string file in Directory.GetFiles($"{path}/code"))
                 {
-                    return file;
+                    if ((Path.GetExtension(file).Equals(".rpx") || Path.GetExtension(file).Equals(".wud") || Path.GetExtension(file).Equals(".wux") || Path.GetExtension(file).Equals(".wad") || Path.GetExtension(file).Equals(".elf")))
+                    {
+                        Debug.WriteLine(file);
+                        return file;
+                    }
                 }
             }
             return null;

@@ -18,11 +18,21 @@ namespace Emulators.Pages
         {
             InitializeComponent();
 
+            LoadButtons();
+        }
+
+        public void LoadButtons()
+        {
             PlaceButtons();
             UpdateButtonsLive();
 
             PopulateSortComboBoxItems();
             PopulateConsoleComboBoxItems();
+        }
+
+        private void Reload()
+        {
+            this.Reload();
         }
 
         private void PopulateSortComboBoxItems()
@@ -47,16 +57,13 @@ namespace Emulators.Pages
         {
             var gamesFolder = $"{Properties.Settings.Default.GameFolder}";
 
+            var systemEntries = Directory.GetFileSystemEntries($"{gamesFolder}", "*.*", SearchOption.AllDirectories);
+
             var listOfFiles = Directory.GetFiles($"{gamesFolder}", "*.*", SearchOption.TopDirectoryOnly);
             var listOfDirs = Directory.GetDirectories($"{gamesFolder}", "*.*", SearchOption.TopDirectoryOnly);
 
             if (!gamesFolder.Equals("") && Directory.Exists(gamesFolder))
             {
-                foreach (string file in listOfFiles)
-                {
-                    MakeButton($"{Path.GetFullPath(file)}");
-                }
-
                 foreach (string folder in listOfDirs)
                 {
                     if (Directory.Exists(folder) && Shortcuts.WiiUChecker.CheckForWiiUFolder(folder) != null)
@@ -64,6 +71,19 @@ namespace Emulators.Pages
                         MakeButton($"{Shortcuts.WiiUChecker.CheckForWiiUFolder(folder)}");
                     }
                 }
+
+                foreach (string file in listOfFiles)
+                {
+                    MakeButton($"{Path.GetFullPath(file)}");
+                }
+
+                //foreach (string folder in listOfDirs)
+                //{
+                //    if (Directory.Exists(folder) && Shortcuts.WiiUChecker.CheckForWiiUFolder(folder) != null)
+                //    {
+                //        MakeButton($"{Shortcuts.WiiUChecker.CheckForWiiUFolder(folder)}");
+                //    }
+                //}
             }
             else
             {
