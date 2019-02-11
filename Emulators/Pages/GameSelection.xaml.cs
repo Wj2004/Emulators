@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Emulators.Pages
@@ -46,23 +47,21 @@ namespace Emulators.Pages
         {
             var gamesFolder = $"{Properties.Settings.Default.GameFolder}";
 
+            var listOfFiles = Directory.GetFiles($"{gamesFolder}", "*.*", SearchOption.TopDirectoryOnly);
+            var listOfDirs = Directory.GetDirectories($"{gamesFolder}", "*.*", SearchOption.TopDirectoryOnly);
+
             if (!gamesFolder.Equals("") && Directory.Exists(gamesFolder))
             {
-                var folder = Directory.GetFiles($"{gamesFolder}", "*.*", SearchOption.TopDirectoryOnly);
-                foreach (string file in folder)
+                foreach (string file in listOfFiles)
                 {
                     MakeButton($"{Path.GetFullPath(file)}");
                 }
 
-                foreach (string subFolder in Directory.GetDirectories(gamesFolder))
+                foreach (string folder in listOfDirs)
                 {
-                    if (Shortcuts.WiiUChecker.CheckForWiiUFolder(subFolder) != null)
+                    if (Directory.Exists(folder) && Shortcuts.WiiUChecker.CheckForWiiUFolder(folder) != null)
                     {
-                        MakeButton($"{Shortcuts.WiiUChecker.CheckForWiiUFolder(subFolder)}");
-                    }
-                    else
-                    {
-                        
+                        MakeButton($"{Shortcuts.WiiUChecker.CheckForWiiUFolder(folder)}");
                     }
                 }
             }
