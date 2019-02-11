@@ -48,10 +48,22 @@ namespace Emulators.Pages
 
             if (!gamesFolder.Equals("") && Directory.Exists(gamesFolder))
             {
-                var folder = Directory.GetFiles($"{gamesFolder}", "*.*", SearchOption.AllDirectories);
+                var folder = Directory.GetFiles($"{gamesFolder}", "*.*", SearchOption.TopDirectoryOnly);
                 foreach (string file in folder)
                 {
                     MakeButton($"{Path.GetFullPath(file)}");
+                }
+
+                foreach (string subFolder in Directory.GetDirectories(gamesFolder))
+                {
+                    if (Shortcuts.WiiUChecker.CheckForWiiUFolder(subFolder) != null)
+                    {
+                        MakeButton($"{Shortcuts.WiiUChecker.CheckForWiiUFolder(subFolder)}");
+                    }
+                    else
+                    {
+                        
+                    }
                 }
             }
             else
@@ -66,7 +78,6 @@ namespace Emulators.Pages
                 }
             }
         }
-
 
 
         private void MakeButton(string path)
@@ -405,14 +416,14 @@ namespace Emulators.Pages
         {
             switch (extension)
             {
-                //Wii Dolphin
+                //Wii
                 case ".wbfs":
                 case ".cISO":
                 case ".wdf":
                 case ".wdf1":
                 case ".wdf2":
                     return ConsoleEnum.Wii;
-                //Gamecube Dolphin
+                //Gamecube
                 case ".gcm":
                     return ConsoleEnum.GameCube;
                 //Nintendo 64
@@ -430,6 +441,13 @@ namespace Emulators.Pages
                 case ".gb":
                 case ".gba":
                     return ConsoleEnum.GameBoy;
+                //Wii U
+                case ".rpx":
+                case ".wud":
+                case ".wux":
+                case ".wad":
+                case ".elf":
+                    return ConsoleEnum.WiiU;
                 default:
                     return ConsoleEnum.Unknown;
             }

@@ -76,14 +76,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CheckZipFile.cs" />
-    <Compile Include="OpenSettings.cs" />
+    <Compile Include="Shortcuts\CheckZipFile.cs" />
+    <Compile Include="Shortcuts\OpenSettings.cs" />
     <Compile Include="Pages\Settings\EmulatorsSettings.xaml.cs">
       <DependentUpon>EmulatorsSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\GameSelection.xaml.cs">
       <DependentUpon>GameSelection.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Shortcuts\WiiUChecker.cs" />
     <Page Include="Pages\Settings\EmulatorsSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -100,7 +101,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Shortcuts\Extensions.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
