@@ -45,6 +45,7 @@ namespace Emulators.Pages.Settings
                     SettingView.Navigate(new GamesSettings());
                     break;
                 case Setting.Theme:
+                    SettingView.Navigate(new ThemeSettings());
                     break;
                 default:
                     SettingView.Navigate(new EmulatorsSettings());

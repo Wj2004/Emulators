@@ -14,13 +14,7 @@ namespace Emulators
                 settings = new Pages.Settings.SettingsWindow();
             }
             settings.Closed += delegate { settings = null; };
-
-            if (settings.WindowState == WindowState.Minimized)
-            {
-                settings.WindowState = WindowState.Normal;
-            }
-            settings.Show();
-            settings.Activate();
+            settings.ShowDialog();
 
             if (!category.Equals(""))
             {

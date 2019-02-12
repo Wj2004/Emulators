@@ -19,6 +19,8 @@ namespace Emulators.Pages
             InitializeComponent();
 
             LoadButtons();
+            CommandBindings.Add(new CommandBinding(Command.OpenFileLocation, OpenLocation, Allow));
+            Focus();
         }
 
         public void LoadButtons()
@@ -57,26 +59,12 @@ namespace Emulators.Pages
         {
             var gamesFolder = $"{Properties.Settings.Default.GameFolder}";
 
-            var systemEntries = Directory.GetFileSystemEntries($"{gamesFolder}", "*.*", SearchOption.AllDirectories);
-
-            var listOfFiles = Directory.GetFiles($"{gamesFolder}", "*.*", SearchOption.TopDirectoryOnly);
+            var listOfFiles = Directory.GetFiles($"{gamesFolder}", "*.*", SearchOption.AllDirectories);
             var listOfDirs = Directory.GetDirectories($"{gamesFolder}", "*.*", SearchOption.TopDirectoryOnly);
+
 
             if (!gamesFolder.Equals("") && Directory.Exists(gamesFolder))
             {
-                foreach (string folder in listOfDirs)
-                {
-                    if (Directory.Exists(folder) && Shortcuts.WiiUChecker.CheckForWiiUFolder(folder) != null)
-                    {
-                        MakeButton($"{Shortcuts.WiiUChecker.CheckForWiiUFolder(folder)}");
-                    }
-                }
-
-                foreach (string file in listOfFiles)
-                {
-                    MakeButton($"{Path.GetFullPath(file)}");
-                }
-
                 //foreach (string folder in listOfDirs)
                 //{
                 //    if (Directory.Exists(folder) && Shortcuts.WiiUChecker.CheckForWiiUFolder(folder) != null)
@@ -84,6 +72,11 @@ namespace Emulators.Pages
                 //        MakeButton($"{Shortcuts.WiiUChecker.CheckForWiiUFolder(folder)}");
                 //    }
                 //}
+
+                foreach (string file in listOfFiles)
+                {
+                    MakeButton($"{Path.GetFullPath(file)}");
+                }
             }
             else
             {
@@ -98,6 +91,14 @@ namespace Emulators.Pages
             }
         }
 
+        private void OpenLocation(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("Opened");
+        }
+        private void Allow(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
 
         private void MakeButton(string path)
         {
@@ -146,10 +147,11 @@ namespace Emulators.Pages
             FileSystemWatcher watcher = new FileSystemWatcher
             {
                 Path = folderName,
+                IncludeSubdirectories = true,
 
-                /* Watch for changes in LastAccess and LastWrite times, and
-                   the renaming of files or directories. */
-                NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
+            /* Watch for changes in LastAccess and LastWrite times, and
+               the renaming of files or directories. */
+            NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
                | NotifyFilters.FileName | NotifyFilters.DirectoryName
             };
 
@@ -472,6 +474,14 @@ namespace Emulators.Pages
             }
         }
     }
+
+    public static class Command
+    {
+
+        public static readonly RoutedUICommand OpenFileLocation = new RoutedUICommand("Open file location", "OpenLocation", typeof(GameSelection));
+
+    }
+
     public class ButtonDataPath : ButtonData
     {
         public string Path { get; set; }

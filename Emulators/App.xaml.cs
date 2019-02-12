@@ -10,6 +10,16 @@ namespace Emulators
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+            Load();
+
+            base.OnStartup(e);
+
+            MainWindow mw = new MainWindow();
+            mw.Show();
+        }
+
+        public static void Load()
+        {
             ResourceDictionary LightDicti = new ResourceDictionary();
             LightDicti.Source = new Uri("Resources/LightTheme.xaml", UriKind.Relative);
 
@@ -24,16 +34,6 @@ namespace Emulators
             {
                 Application.Current.Resources.MergedDictionaries.Add(DarkDicti);
             }
-
-
-
-
-            
-
-            base.OnStartup(e);
-
-            MainWindow mw = new MainWindow();
-            mw.Show();
         }
     }
 }
