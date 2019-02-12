@@ -8,11 +8,19 @@
       Title="ThemeSettings">
 
 	<Grid Name="LayoutRoot">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto"/>
-			<ColumnDefinition/>
-		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
+			<RowDefinition Height="50"/>
+			<RowDefinition/>
 		</Grid.RowDefinitions>
+		<Label FontSize="25" Grid.Column="0" Grid.Row="0">Theme</Label>
+
+		<ScrollViewer Grid.Row="1" Grid.ColumnSpan="2">
+			<Grid Name="HolderGrid">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+			</Grid>
+		</ScrollViewer>
 	</Grid>
 </Page>

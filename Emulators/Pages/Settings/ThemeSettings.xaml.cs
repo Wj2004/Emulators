@@ -2,6 +2,8 @@
 using System.Windows.Controls;
 using System.Configuration;
 using System.Windows.Data;
+using System.Collections.Generic;
+using System;
 
 namespace Emulators.Pages.Settings
 {
@@ -14,6 +16,7 @@ namespace Emulators.Pages.Settings
             MakeGridList();
         }
 
+
         private void MakeGridList()
         {
             int i = 0;
@@ -25,7 +28,7 @@ namespace Emulators.Pages.Settings
                 {
                     RowDefinition rowDefinition = new RowDefinition();
                     rowDefinition.Height = GridLength.Auto;
-                    LayoutRoot.RowDefinitions.Add(rowDefinition);
+                    HolderGrid.RowDefinitions.Add(rowDefinition);
 
                     Label l = new Label()
                     {
@@ -33,13 +36,13 @@ namespace Emulators.Pages.Settings
                     };
                     Grid.SetRow(l, i);
                     Grid.SetColumn(l, 0);
-                    LayoutRoot.Children.Add(l);
+                    HolderGrid.Children.Add(l);
 
                     ComboBox t = new ComboBox()
                     {
                         Name = s.DefaultValue.ToString(),
                         IsReadOnly = false,
-                        
+
                     };
                     t.SelectionChanged += OnChanged;
 
@@ -50,7 +53,7 @@ namespace Emulators.Pages.Settings
 
                     Grid.SetRow(t, i);
                     Grid.SetColumn(t, 1);
-                    LayoutRoot.Children.Add(t);
+                    HolderGrid.Children.Add(t);
                     i++;
                 }
             }

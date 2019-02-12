@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,55 +20,84 @@ namespace Emulators.Pages.Settings
         {
             InitializeComponent();
 
-            MakeList();
+            MakeDesign();
+            MakeGridList();
         }
 
-        private void MakeList()
+        void MakeDesign()
         {
-            int i = 0;
-            Properties.Settings.Default.Reload();
-
             foreach (SettingsProperty s in Properties.Settings.Default.Properties)
             {
                 if (s.Name.Contains("GameFolder"))
                 {
                     RowDefinition rowDefinition = new RowDefinition();
                     rowDefinition.Height = GridLength.Auto;
-                    LayoutRoot.RowDefinitions.Add(rowDefinition);
-
-                    Label l = new Label()
-                    {
-                        Content = s.Name.Replace("GameFolder", "Gamefolder:")
-                    };
-                    Grid.SetRow(l, i);
-                    Grid.SetColumn(l, 0);
-                    LayoutRoot.Children.Add(l);
-
-                    System.Windows.Controls.TextBox t = new TextBox()
-                    {
-                        Name = s.DefaultValue.ToString(),
-                        IsReadOnly = true,
-                    };
-
-                    Binding myBinding = new Binding
-                    {
-                        Source = Properties.Settings.Default,
-                        Path = new PropertyPath(s.Name),
-                        Mode = BindingMode.TwoWay,
-                        UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-                    };
-
-                    BindingOperations.SetBinding(t, TextBox.TextProperty, myBinding);
-                    BindingOperations.SetBinding(t, TextBox.ToolTipProperty, myBinding);
-
-                    t.PreviewMouseUp += PreviewMouseUp;
-                    Grid.SetRow(t, i);
-                    Grid.SetColumn(t, 1);
-                    LayoutRoot.Children.Add(t);
-                    i++;
+                    HolderGrid.RowDefinitions.Add(rowDefinition);
                 }
             }
         }
+
+        public List<SettingPair> SettingsList = new List<SettingPair>();
+
+        private void MakeGridList()
+        {
+            Properties.Settings.Default.Reload();
+            foreach (SettingsProperty s in Properties.Settings.Default.Properties)
+            {
+                if (s.Name.Contains("GameFolder"))
+                {
+                    SettingsList.Add(new SettingPair(LabelMaker(s.Name.Replace("GameFolder", "Gamefolder:")), TextBoxMaker(s.DefaultValue.ToString(), s.Name)));
+                    SettingsList.Sort((x, y) => String.Compare(x.EmuLabel.Content.ToString(), y.EmuLabel.Content.ToString()));
+                }
+            }
+            int i = 0;
+            foreach (SettingPair setting in SettingsList)
+            {
+                Label label = setting.EmuLabel;
+                TextBox textbox = setting.Path;
+                Grid.SetRow(label, i);
+                Grid.SetRow(textbox, i);
+
+                HolderGrid.Children.Add(setting.EmuLabel);
+                HolderGrid.Children.Add(setting.Path);
+                i++;
+            }
+        }
+
+        private Label LabelMaker(string content)
+        {
+            Label l = new Label()
+            {
+                Content = content
+            };
+            Grid.SetColumn(l, 0);
+            return l;
+        }
+
+        private TextBox TextBoxMaker(string name, string setting)
+        {
+            TextBox t = new TextBox()
+            {
+                Name = name,
+                IsReadOnly = true,
+            };
+
+            Binding myBinding = new Binding
+            {
+                Source = Properties.Settings.Default,
+                Path = new PropertyPath(setting),
+                Mode = BindingMode.TwoWay,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
+
+            BindingOperations.SetBinding(t, TextBox.TextProperty, myBinding);
+            BindingOperations.SetBinding(t, TextBox.ToolTipProperty, myBinding);
+
+            t.PreviewMouseUp += PreviewMouseUp;
+            Grid.SetColumn(t, 1);
+            return t;
+        }
+
 
         private new void PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
